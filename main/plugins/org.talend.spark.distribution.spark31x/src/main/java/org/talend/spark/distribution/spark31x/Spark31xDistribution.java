@@ -39,6 +39,8 @@ public class Spark31xDistribution extends AbstractSparkDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HDFSComponent, HiveComponent, HiveOnSparkComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
+    
+    public static final String HIVE_Dataproc = "Dataproc 2.0.1 (Hive 3.1.2)"; //$NON-NLS-1$
 
     public final static String VERSION = Spark31xDistribution.SPARK_VERSION.getSparkVersion();
 
@@ -51,6 +53,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     protected Map<ComponentType, ComponentCondition> displayConditions;
 
     protected Map<ComponentType, String> customVersionDisplayNames;
+    
 
     public Spark31xDistribution() {
         this.displayConditions = buildDisplayConditions();
@@ -65,6 +68,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 
     protected Map<ComponentType, String> buildCustomVersionDisplayNames() {
         Map<ComponentType, String> result = new HashMap<>();
+        result.put(ComponentType.HIVE, HIVE_Dataproc);
         return result;
     }
 
@@ -174,9 +178,9 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     
     @Override
     public boolean doSupportUniversalLocalMode() {
-    	return true;
+       return true;
     }
-
+    
     @Override
     public boolean doSupportImpersonation() {
         return false;
