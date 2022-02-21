@@ -256,7 +256,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText dbfsDepFolderText;
     
     private Group dataProcGroup;
-    
+    //Dataproc
     private LabelledText projectId;
     
     private LabelledText clusterId;
@@ -264,6 +264,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText region;
     
     private LabelledText jarsBucket;
+    
+    private LabelledCombo credentialType;
+    
+    private LabelledFileField pathToCredentials;
+    
+    private LabelledText oauthTokenText;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -1476,7 +1482,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         });
 
         projectId.addModifyListener(new ModifyListener() {
-
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID,
@@ -1486,7 +1491,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         });
 
         clusterId.addModifyListener(new ModifyListener() {
-
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID,
@@ -1496,7 +1500,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         });
 
         region.addModifyListener(new ModifyListener() {
-
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION,
@@ -1506,7 +1509,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         });
 
         jarsBucket.addModifyListener(new ModifyListener() {
-
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET,
@@ -1541,19 +1543,23 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, true);
+            	hideControl(dataProcGroup, true);
             } else if (ESparkMode.SPARK_LOCAL.getLabel().equals(sparkModeLableName)) {
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, true);
+            	hideControl(dataProcGroup, true);
             } else { 
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, true);
+            	hideControl(dataProcGroup, true);
             }
     	} else {
     		hideControl(dataBricksGroup, true);
+    		hideControl(dataProcGroup, true);
     	}
     }
 
@@ -2167,6 +2173,30 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 	                return false;
 	            }
 	        }
+	
+	        //Dataproc
+	        private LabelledText jarsBucket;
+	        
+	        if (!validText(projectId.getText())) {
+	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.projectId")); //$NON-NLS-1$
+	                return false;
+	        }
+	
+	        if (!validText(clusterId.getText())) {
+	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.clusterId")); //$NON-NLS-1$
+	                return false;
+	        }
+	
+	        if (!validText(region.getText())) {
+	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.region")); //$NON-NLS-1$
+	                return false;
+	        }
+
+	        if (!validText(jarsBucket.getText())) {
+	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.jarsBucket")); //$NON-NLS-1$
+	                return false;
+	         }
+	        
 	        checkServicesBtn.setEnabled(true);
         }
         return true;
