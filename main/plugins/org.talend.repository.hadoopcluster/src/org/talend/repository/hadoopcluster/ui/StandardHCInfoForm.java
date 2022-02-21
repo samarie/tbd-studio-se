@@ -254,6 +254,16 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText tokenText;
 
     private LabelledText dbfsDepFolderText;
+    
+    private Group dataProcGroup;
+    
+    private LabelledText projectId;
+    
+    private LabelledText clusterId;
+    
+    private LabelledText region;
+    
+    private LabelledText jarsBucket;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -360,6 +370,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             } else {
             	sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
             }
+        	
         	String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
             if (providerValue != null) {
                 cloudProviderCombo.setText(getDatabriksCloudProviderByVaule(providerValue).getProviderLableName());
@@ -373,7 +384,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             } else {
             	runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
             }
-            
+
             String endPoint = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT));
             endpointText.setText(endPoint);
@@ -389,6 +400,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String folder = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
             dbfsDepFolderText.setText(folder);
+            
+            //Dataproc
+            String projectIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID));
+            String clusterIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID));
+            String regionValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION));
+            String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
         }
     }
 
@@ -548,6 +565,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
         addDatabricksField();
+        addDataprocField();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -610,6 +628,19 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         dbfsDepFolderText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.dbfsDepFolder"), 1); //$NON-NLS-1$
     }
     
+    private void addDataprocField() {
+    	dataProcGroup = Form.createGroup(bigComposite, 2, Messages.getString("GoogleDataprocInfoForm.text.configuration"), 110); //$NON-NLS-1$
+    	dataProcGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+    	projectId = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.projectId"), 1); //$NON-NLS-1$
+
+    	clusterId = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.clusterId"), 1); //$NON-NLS-1$
+
+    	region = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.region"), 1); //$NON-NLS-1$
+
+    	jarsBucket = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.jarsBucket"), 1); //$NON-NLS-1$
+    }
+
     private List<String> getRunSubmitModes() {
     	List<String> runSubmitLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
@@ -1443,6 +1474,46 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+
+        projectId.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID,
+                		projectId.getText());
+                checkFieldsValue();
+            }
+        });
+
+        clusterId.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID,
+                		clusterId.getText());
+                checkFieldsValue();
+            }
+        });
+
+        region.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION,
+                		region.getText());
+                checkFieldsValue();
+            }
+        });
+
+        jarsBucket.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET,
+                		jarsBucket.getText());
+                checkFieldsValue();
+            }
+        });
     }
     
     private void hideFieldsOnSparkMode() {
@@ -1460,6 +1531,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, false);
+            } else if (ESparkMode.DATAPROC.getLabel().equals(sparkModeLableName)) {
+            	hideControl(connectionGroup, true);
+            	hideControl(authGroup, true);
+            	hideControl(webHDFSSSLEncryptionGrp, true);
+            	hideControl(dataProcGroup, false);
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
@@ -2128,6 +2204,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	collectDBRParameters();
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
             	//TODO
+            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
+            	collectDBRParameters();
             }
     	}
     }
