@@ -2175,8 +2175,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 	        }
 	
 	        //Dataproc
-	        private LabelledText jarsBucket;
-	        
 	        if (!validText(projectId.getText())) {
 	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.projectId")); //$NON-NLS-1$
 	                return false;
