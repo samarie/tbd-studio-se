@@ -1565,7 +1565,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
     	} else {
     		hideControl(dataBricksGroup, true);
-    		hideControl(dataProcGroup, true);
     	}
     }
 
