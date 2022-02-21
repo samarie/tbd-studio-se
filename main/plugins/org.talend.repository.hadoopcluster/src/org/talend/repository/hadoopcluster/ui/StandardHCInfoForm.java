@@ -265,7 +265,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     
     private LabelledText jarsBucket;
     
-    private LabelledCombo credentialType;
+    private LabelledCombo credentialTypeCombo;
     
     private LabelledFileField pathToCredentials;
     
@@ -412,7 +412,13 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String clusterIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID));
             String regionValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION));
             String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
-        }
+            
+            String credentialTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE);
+            if (credentialTypeValue != null) {
+            	credentialTypeCombo.setText(EDataprocAuthMode.AUTH_TOKEN.getAuthModeLabel());
+            }
+
+       }
     }
 
     @Override
@@ -1998,7 +2004,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     private void fillDefaults() {
         HadoopClusterConnection connection = getConnection();
-        if (creation && !connection.isUseCustomConfs()) {
+        String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
+        if (creation && !connection.isUseCustomConfs() || "DATAPROC".equals(sparkModeValue)) {
             HCRepositoryUtil.fillDefaultValuesOfHadoopCluster(connection);
         }
     }
@@ -2232,7 +2239,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	collectDBRParameters();
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
             	//TODO
-            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
+            } else if (ESparkMode.DATAPROC.getLabel().equals(sparkModeLableName)) {
             	collectDBRParameters();
             }
     	}
@@ -2247,6 +2254,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addContextParams(EHadoopParamName.DataBricksClusterId, isUse);
         addContextParams(EHadoopParamName.DataBricksToken, isUse);
         addContextParams(EHadoopParamName.DataBricksDBFSDepFolder, isUse);
+        
+        addContextParams(EHadoopParamName.GoogleProjectId, isUse);
+        addContextParams(EHadoopParamName.GoogleClusterId, isUse);
+        addContextParams(EHadoopParamName.GoogleRegion, isUse);
+        addContextParams(EHadoopParamName.GoogleJarsBucket, isUse);
     }
 
         
