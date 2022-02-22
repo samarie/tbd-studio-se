@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.constants.dataproc;
 
 import org.talend.hadoop.distribution.i18n.Messages;
+
 public enum EDataprocAuthMode {
 
 	SERVICE_ACCOUNT(Messages.getString("EDataproc.SERVICE_ACCOUNT"), "SERVICE_ACCOUNT"),
@@ -22,7 +23,7 @@ public enum EDataprocAuthMode {
 
     private String authModeValue;
 
-    EDataprocSubmitMode(String authModeLabel, String authModeValue) {
+    EDataprocAuthMode(String authModeLabel, String authModeValue) {
         this.authModeLabel = authModeLabel;
         this.authModeValue = authModeValue;
     }
