@@ -75,6 +75,7 @@ import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.dataproc.EDataprocAuthMode;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
