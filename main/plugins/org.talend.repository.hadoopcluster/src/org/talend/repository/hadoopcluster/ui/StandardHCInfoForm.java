@@ -1496,7 +1496,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID,
-                		projectId.getText());
+                		projectIdNameText.getText());
                 checkFieldsValue();
             }
         });
@@ -1505,7 +1505,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID,
-                		clusterId.getText());
+                		clusterIdNameText.getText());
                 checkFieldsValue();
             }
         });
@@ -1514,7 +1514,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION,
-                		region.getText());
+                		regionNameText.getText());
                 checkFieldsValue();
             }
         });
@@ -1523,7 +1523,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET,
-                		jarsBucket.getText());
+                		jarsBucketNameText.getText());
                 checkFieldsValue();
             }
         });
