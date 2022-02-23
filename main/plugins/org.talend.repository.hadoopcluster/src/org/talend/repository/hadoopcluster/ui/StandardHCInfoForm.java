@@ -271,6 +271,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledFileField pathToCredentials;
     
     private LabelledText oauthTokenText;
+    
+    private Button credentialsBtn;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -2012,8 +2014,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     private void fillDefaults() {
         HadoopClusterConnection connection = getConnection();
-        String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
-        if (creation && !connection.isUseCustomConfs() || "Dataproc".equals(sparkModeValue)) {
+        String sparkMode = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
+        if (creation && !connection.isUseCustomConfs() || ESparkMode.DATAPROC.getLabel().equals(sparkModeCombo.getText())) {
             HCRepositoryUtil.fillDefaultValuesOfHadoopCluster(connection);
         }
     }
