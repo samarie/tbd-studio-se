@@ -2,6 +2,8 @@ package org.talend.hadoop.distribution.constants;
 
 public enum ModuleGroupName {
     AZURE("AZURE-GROUP"), //$NON-NLS-1$
+    AVRO("AVRO"), //$NON-NLS-1$
+    AVRO_DATAPROC("AVRO-DATAPROC-GROUP"), //$NON-NLS-1$
     BIGQUERY("BIGQUERY-GROUP"), //$NON-NLS-1$
     CASSANDRA("CASSANDRA-GROUP"), //$NON-NLS-1$
     DYNAMODB_BATCH("DYNAMODB-BATCH-GROUP"), //$NON-NLS-1$
