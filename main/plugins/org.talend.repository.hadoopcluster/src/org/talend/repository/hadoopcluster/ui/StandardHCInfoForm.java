@@ -590,6 +590,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addAuthenticationFields(bigComposite);
         addDatabricksField();
         addDataprocField();
+        addAuthenticationDataproc();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -864,6 +865,31 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         preloadAuthentificationBtn.setText(Messages.getString("HadoopClusterForm.button.preloadAuthentification.label")); //$NON-NLS-1$
     }
 
+    private void addAuthenticationDataproc() {
+        Group configGroup = Form.createGroup(this, 2, Messages.getString("GoogleDataprocInfoForm.text.authentication"), 110); //$NON-NLS-1$
+        configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        authPartComposite = new Composite(configGroup, SWT.NULL);
+        GridLayout authPartLayout = new GridLayout(1, false);
+        authPartLayout.marginWidth = 0;
+        authPartLayout.marginHeight = 0;
+        authPartComposite.setLayout(authPartLayout);
+        authPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        credentialsBtn = new Button(authPartComposite, SWT.CHECK);
+        credentialsBtn.setText(Messages.getString("GoogleDataprocInfoForm.button.authentication.credentials")); //$NON-NLS-1$
+        credentialsBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
+
+        credentialsComposite = new Composite(authPartComposite, SWT.NULL);
+        GridLayout credentialsLayout = new GridLayout(3, false);
+        credentialsLayout.marginWidth = 0;
+        credentialsLayout.marginHeight = 0;
+        credentialsComposite.setLayout(credentialsLayout);
+        credentialsComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        String[] extensions = { "*.*" }; //$NON-NLS-1$
+        pathToCredentialsNameText = new LabelledFileField(credentialsComposite,
+                Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
+    }
+    
     private void addHadoopPropertiesFields() {
         hadoopPropertiesComposite = new Composite(propertiesComposite, SWT.NONE);
         GridLayout hadoopPropertiesLayout = new GridLayout(1, false);

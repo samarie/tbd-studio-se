@@ -277,10 +277,6 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 		return true;
 	}
 	
-	@Override
-	public boolean doSupportStandaloneMode() {
-        return false;
-    }
 
 	@Override
 	public boolean doSupportHive1() {
