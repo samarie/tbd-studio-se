@@ -423,7 +423,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             
             String credentialTypeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
             if (credentialTypeValue != null) {
-            	EDataprocAuthType authType = EDataprocAuthType.getDataprocAuthTypeByName(credentialTypeValue, false);
+            	EDataprocAuthType authType = EDataprocAuthType.getDataprocAuthTypeByName(authType, false);
                 if (authType != null) {
                 	credentialTypeCombo.setText(authType.getDisplayName());
                 } else {
