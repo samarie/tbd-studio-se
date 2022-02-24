@@ -423,8 +423,20 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
             jarsBucketNameText.setText(jarsBucketValue);
             
+            String credentialTypeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
+            if (credentialTypeValue != null) {
+            	EDataprocAuthType authType = EDataprocAuthType.getDataprocAuthTypeByName(credentialTypeValue, false);
+            	if (authType != null) {
+            		credentialTypeCombo.setText(authType.getDisplayName());
+            	} else {
+            		credentialTypeCombo.select(0);
+            	}
+            } else {
+            	credentialTypeCombo.select(0);
+            }
+            
             String authToken = StringUtils
-                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN), false));
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS), false));
             oauthTokenText.setText(authToken);
        }
     }
@@ -538,6 +550,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         clusterIdNameText.setEditable(isEditable);
         regionNameText.setEditable(isEditable);
         jarsBucketNameText.setEditable(isEditable);
+        pathToCredentials.setEditable(isEditable);
+        oauthTokenText.setEditable(isEditable);
     }
 
     @Override
@@ -1563,6 +1577,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+        
+        oauthTokenText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, EncryptionUtil.getValue(oauthTokenText.getText(), true));
+                checkFieldsValue();
+            }
+        });
+
     }
     
     private void hideFieldsOnSparkMode() {
