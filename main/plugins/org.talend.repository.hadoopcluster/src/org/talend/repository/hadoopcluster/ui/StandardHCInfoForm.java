@@ -57,6 +57,7 @@ import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
+import org.talend.core.hadoop.version.EDataprocAuthType;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.ComponentCategory;
 import org.talend.core.model.process.INode;
@@ -112,7 +113,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private ScrolledComposite scrolledComposite;
 
     private Composite bigComposite;
-
+    
     private Composite parentForm;
 
     protected Composite propertiesComposite;
@@ -258,6 +259,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     
     private Group dataProcGroup;
     //Dataproc
+    private Composite credentialsComposite;
+
     private LabelledText projectIdNameText;
 
     private LabelledText clusterIdNameText;
@@ -900,7 +903,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         credentialsComposite.setLayout(credentialsLayout);
         credentialsComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         String[] extensions = { "*.*" }; //$NON-NLS-1$
-        pathToCredentialsNameText = new LabelledFileField(credentialsComposite,
+        pathToCredentials = new LabelledFileField(credentialsComposite,
                 Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
     }
     
