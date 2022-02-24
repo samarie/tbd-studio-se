@@ -412,15 +412,20 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             
             //Dataproc
             String projectIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID));
-            String clusterIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID));
-            String regionValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION));
-            String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
+            projectIdNameText.setText(projectIdValue);
             
-            String credentialTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE);
-            if (credentialTypeValue != null) {
-            	credentialTypeCombo.setText(EDataprocAuthMode.AUTH_TOKEN.getAuthModeLabel());
-            }
-
+            String clusterIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID));
+            clusterIdNameText.setText(clusterIdValue);
+            
+            String regionValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION));
+            regionNameText.setText(regionValue);
+            
+            String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
+            jarsBucketNameText.setText(jarsBucketValue);
+            
+            String authToken = StringUtils
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN), false));
+            oauthTokenText.setText(authToken);
        }
     }
 
@@ -658,6 +663,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     	regionNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.region"), 1); //$NON-NLS-1$
 
     	jarsBucketNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.jarsBucket"), 1); //$NON-NLS-1$
+    	
+    	oauthTokenText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.token"), 1, //$NON-NLS-1$
+                SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
     }
 
     private List<String> getRunSubmitModes() {

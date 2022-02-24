@@ -155,11 +155,16 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean useS3AProperties() {
         return true;
     }
-
+    
     @Override
-    public boolean doSupportSparkStandaloneMode() {
-        return false;
-    }
+	public boolean doSupportEmbeddedMode() {
+		return false;
+	}
+
+	@Override
+	public boolean doSupportStandaloneMode() {
+		return false;
+	}
 
     @Override
     public boolean doSupportSparkYarnClientMode() {
