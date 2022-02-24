@@ -40,7 +40,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
     
-    public static final String HIVE_Dataproc = "Dataproc 2.0.1 (Hive 3.1.2)"; //$NON-NLS-1$
+    public static final String HIVE_Dataproc = "Dataproc 2.0.1 (Hive 3.1.2)";
 
     public final static String VERSION = Spark31xDistribution.SPARK_VERSION.getSparkVersion();
 
@@ -53,7 +53,6 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     protected Map<ComponentType, ComponentCondition> displayConditions;
 
     protected Map<ComponentType, String> customVersionDisplayNames;
-    
 
     public Spark31xDistribution() {
         this.displayConditions = buildDisplayConditions();
@@ -155,16 +154,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean useS3AProperties() {
         return true;
     }
-    
-    @Override
-	public boolean doSupportEmbeddedMode() {
-		return false;
-	}
 
-	@Override
-	public boolean doSupportStandaloneMode() {
-		return false;
-	}
+    @Override
+    public boolean doSupportSparkStandaloneMode() {
+        return false;
+    }
 
     @Override
     public boolean doSupportSparkYarnClientMode() {
@@ -183,9 +177,9 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     
     @Override
     public boolean doSupportUniversalLocalMode() {
-       return true;
+    	return true;
     }
-    
+
     @Override
     public boolean doSupportImpersonation() {
         return false;
@@ -277,7 +271,6 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 		return true;
 	}
 	
-
 	@Override
 	public boolean doSupportHive1() {
 		return false;
