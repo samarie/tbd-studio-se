@@ -851,21 +851,21 @@ public class HCRepositoryUtil {
         }
         connection.setPreloadAuthentification(true);
 
-        String defaultGoogleProjectId = hiveVersion.getDefaultConfig(sparkMode, EHadoopProperties.GOOGLE_PROJECT_ID.getName());
+        String defaultGoogleProjectId = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_PROJECT_ID.getName());
         if (defaultGoogleProjectId != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID, defaultGoogleProjectId);
         }
 
-        String defaultGoogleClusterId = hiveVersion.getDefaultConfig(sparkMode, EHadoopProperties.GOOGLE_CLUSTER_ID.getName());
+        String defaultGoogleClusterId = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_CLUSTER_ID.getName());
         if (defaultGoogleClusterId != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID, defaultGoogleClusterId);
         }
 
-        String defaultGoogleRegion = hiveVersion.getDefaultConfig(sparkMode, EHadoopProperties.GOOGLE_REGION.getName());
+        String defaultGoogleRegion = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_REGION.getName());
         if (defaultGoogleRegion != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION, defaultGoogleRegion);
         }
-        String defaultGoogleJarsBucket = hiveVersion.getDefaultConfig(sparkMode, EHadoopProperties.GOOGLE_JARS_BUCKET.getName());
+        String defaultGoogleJarsBucket = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_JARS_BUCKET.getName());
         if (defaultGoogleJarsBucket != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET, defaultGoogleJarsBucket);
         }
