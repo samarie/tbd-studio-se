@@ -426,7 +426,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
             jarsBucketNameText.setText(jarsBucketValue);
             
-            String credentialTypeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
+            /*String credentialTypeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
             if (credentialTypeValue != null) {
             	EDataprocAuthType authType = EDataprocAuthType.getDataprocAuthTypeByName(credentialTypeValue, false);
             	if (authType != null) {
@@ -436,7 +436,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	}
             } else {
             	credentialTypeCombo.select(0);
-            }
+            }*/
             
             String authToken = StringUtils
                     .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS), false));
@@ -903,7 +903,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         credentialsComposite.setLayout(credentialsLayout);
         credentialsComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         String[] extensions = { "*.*" }; //$NON-NLS-1$
-        pathToCredentials = new LabelledFileField(credentialsComposite,
+        pathToCredentialsNameText = new LabelledFileField(credentialsComposite,
                 Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
     }
     
