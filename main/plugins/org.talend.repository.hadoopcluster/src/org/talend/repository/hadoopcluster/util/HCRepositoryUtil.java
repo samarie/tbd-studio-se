@@ -869,6 +869,16 @@ public class HCRepositoryUtil {
         if (defaultGoogleJarsBucket != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET, defaultGoogleJarsBucket);
         }
+        
+        String defaultPathToGoogleCredentials = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.PATH_TO_GOOGLE_CREDENTIALS.getName());
+        if (defaultPathToGoogleCredentials != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS, defaultPathToGoogleCredentials);
+        }
+        
+        String defaultGoogleOauthToken = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_CLUSTER_ID.getName());
+        if (defaultGoogleOauthToken != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, defaultGoogleOauthToken);
+        }
         String defaultWebHCatHostName = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.HD_WEBHCAT_HOSTNAME.getName());
         if (defaultWebHCatHostName != null) {
