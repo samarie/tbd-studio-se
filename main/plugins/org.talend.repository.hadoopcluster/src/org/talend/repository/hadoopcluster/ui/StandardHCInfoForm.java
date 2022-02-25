@@ -131,6 +131,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private Button kerberosBtn;
 
     private Composite authPartComposite;
+    
+    private Composite authPartCompositeDataproc;
 
     private Composite authCommonComposite;
 
@@ -426,20 +428,24 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
             jarsBucketNameText.setText(jarsBucketValue);
             
-            /*String credentialTypeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
-            if (credentialTypeValue != null) {
-            	EDataprocAuthType authType = EDataprocAuthType.getDataprocAuthTypeByName(credentialTypeValue, false);
-            	if (authType != null) {
-            		credentialTypeCombo.setText(authType.getDisplayName());
-            	} else {
-            		credentialTypeCombo.select(0);
-            	}
+            String authMode = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.GOOGLE_AUTH_MODE));
+            if (authMode != null) {
+            	EDataprocAuthType type = EDataprocAuthType.getDataprocAuthTypeByName(authMode, false);
+                if (type != null) {
+                    credentialTypeCombo.setText(type.getDisplayName());
+                } else {
+                    credentialTypeCombo.select(0);
+                }
             } else {
-            	credentialTypeCombo.select(0);
-            }*/
+                credentialTypeCombo.select(0);
+            }
             
-            String authToken = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
-            oauthTokenText.setText(authToken);
+            String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
+            jarsBucketNameText.setText(jarsBucketValue);
+            
+            String oauthTokenValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
+            oauthTokenText.setText(jarsBucketValue);
+
        }
     }
 
@@ -489,6 +495,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         	setHadoopConfBtn.setSelection(true);
         	hadoopConfSpecificJarText.setEditable(true);
         }
+        
     }
 
     @Override
@@ -547,7 +554,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         // setHadoopConfBtn.setEnabled(isEditable);
         hadoopConfSpecificJarText.setEditable(isEditable && setHadoopConfBtn.getSelection());
         browseHadoopConfBtn.setEnabled(isEditable && setHadoopConfBtn.getSelection());
-        
+        //Dataproc
         projectIdNameText.setEditable(isEditable);
         clusterIdNameText.setEditable(isEditable);
         regionNameText.setEditable(isEditable);
@@ -606,7 +613,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addAuthenticationFields(bigComposite);
         addDatabricksField();
         addDataprocField();
-        addAuthenticationDataproc();
+        //addAuthenticationDataproc();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -681,10 +688,22 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     	jarsBucketNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.jarsBucket"), 1); //$NON-NLS-1$
     	
-    	oauthTokenText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.token"), 1, //$NON-NLS-1$
+    	credentialsBtn = new Button(bigComposite, SWT.CHECK);
+        credentialsBtn.setText(Messages.getString("GoogleDataprocInfoForm.button.authentication.credentials")); //$NON-NLS-1$
+        credentialsBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
+        
+        credentialTypeCombo = new LabelledCombo(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		EDataprocAuthType.getAllDataprocAuthTypes());
+        
+        String[] extensions = { "*.*" }; //$NON-NLS-1$
+        pathToCredentials = new LabelledFileField(dataProcGroup,
+                Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
+        
+        oauthTokenText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.token"), 1, //$NON-NLS-1$
                 SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+    	
     }
-
+    
     private List<String> getRunSubmitModes() {
     	List<String> runSubmitLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
@@ -881,10 +900,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         preloadAuthentificationBtn.setText(Messages.getString("HadoopClusterForm.button.preloadAuthentification.label")); //$NON-NLS-1$
     }
 
-    private void addAuthenticationDataproc() {
+    /*private void addAuthenticationDataproc() {
         Group configGroup = Form.createGroup(this, 2, Messages.getString("GoogleDataprocInfoForm.text.authentication"), 110); //$NON-NLS-1$
         configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        authPartComposite = new Composite(configGroup, SWT.NULL);
+        authPartCompositeDataproc = new Composite(configGroup, SWT.NULL);
         GridLayout authPartLayout = new GridLayout(1, false);
         authPartLayout.marginWidth = 0;
         authPartLayout.marginHeight = 0;
@@ -904,7 +923,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         String[] extensions = { "*.*" }; //$NON-NLS-1$
         pathToCredentials = new LabelledFileField(credentialsComposite,
                 Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
-    }
+        
+        oauthTokenText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.token"), 1, //$NON-NLS-1$
+                SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+    
+    }*/
     
     private void addHadoopPropertiesFields() {
         hadoopPropertiesComposite = new Composite(propertiesComposite, SWT.NONE);
@@ -1580,10 +1603,40 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
         });
         
+        credentialsBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	pathToCredentials.setVisible(credentialsBtn.getSelection());
+            	oauthTokenText.setVisible(credentialsBtn.getSelection());
+                checkFieldsValue();
+            }
+        });
+        
+        credentialTypeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String credentialName = credentialTypeCombo.getText();
+                    getConnection().getParameters().put(ConnParameterKeys.GOOGLE_AUTH_MODE,
+                    		EDataprocAuthType.getDataprocAuthTypeByDisplayName(credentialName).getName());
+                    checkFieldsValue();
+            }
+        });
+
+        pathToCredentialsNameText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
+                        pathToCredentialsNameText.getText());
+                pathToCredentials.setVisible(credentialsBtn.getSelection());
+                checkFieldsValue();
+            }
+        });
+
         oauthTokenText.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, EncryptionUtil.getValue(oauthTokenText.getText(), true));
+                oauthTokenText.setVisible(credentialsBtn.getSelection());
                 checkFieldsValue();
             }
         });
@@ -2328,6 +2381,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addContextParams(EHadoopParamName.GoogleClusterId, isUse);
         addContextParams(EHadoopParamName.GoogleRegion, isUse);
         addContextParams(EHadoopParamName.GoogleJarsBucket, isUse);
+        addContextParams(EHadoopParamName.PathToGoogleCredentials, isUse);
+        addContextParams(EHadoopParamName.oauthToken, isUse);
     }
 
         
