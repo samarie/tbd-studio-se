@@ -903,7 +903,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         credentialsComposite.setLayout(credentialsLayout);
         credentialsComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         String[] extensions = { "*.*" }; //$NON-NLS-1$
-        pathToCredentialsNameText = new LabelledFileField(credentialsComposite,
+        pathToCredentials = new LabelledFileField(credentialsComposite,
                 Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
     }
     
