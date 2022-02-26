@@ -43,6 +43,8 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public final static String VERSION = Spark31xDistribution.SPARK_VERSION.getSparkVersion();
 
     public static final String VERSION_DISPLAY = Spark31xDistribution.SPARK_VERSION.getVersionLabel();
+    
+    public static final String HIVE_DATAPROC_DISPLAY = "Dataproc 2.0.x (Hive 3.1.2)"; //$NON-NLS-1$
 
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -65,6 +67,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 
     protected Map<ComponentType, String> buildCustomVersionDisplayNames() {
         Map<ComponentType, String> result = new HashMap<>();
+        esult.put(ComponentType.HIVE, HIVE_DATAPROC_DISPLAY);
         return result;
     }
 
