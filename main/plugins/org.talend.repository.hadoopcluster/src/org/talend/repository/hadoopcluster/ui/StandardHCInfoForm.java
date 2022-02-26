@@ -428,9 +428,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
             jarsBucketNameText.setText(jarsBucketValue);
             
-            String authMode = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.GOOGLE_AUTH_MODE));
-            if (authMode != null) {
-            	EDataprocAuthType type = EDataprocAuthType.getDataprocAuthTypeByName(authMode, false);
+            String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
+            if (authModeValue != null) {
+            	EDataprocAuthType type = EDataprocAuthType.getDataprocAuthTypeByName(authModeValue, false);
                 if (type != null) {
                     credentialTypeCombo.setText(type.getDisplayName());
                 } else {
@@ -440,8 +440,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 credentialTypeCombo.select(0);
             }
             
-            String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
-            jarsBucketNameText.setText(jarsBucketValue);
+            String pathToGoogleCredentials = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
+            pathToCredentials.setText(pathToGoogleCredentials);
             
             String oauthTokenValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
             oauthTokenText.setText(jarsBucketValue);
@@ -1616,17 +1616,17 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             @Override
             public void widgetSelected(SelectionEvent e) {
                 String credentialName = credentialTypeCombo.getText();
-                    getConnection().getParameters().put(ConnParameterKeys.GOOGLE_AUTH_MODE,
+                    getConnection().getParameters().put(ConnParameterKeys.CONN_AUTH_MODE,
                     		EDataprocAuthType.getDataprocAuthTypeByDisplayName(credentialName).getName());
                     checkFieldsValue();
             }
         });
 
-        pathToCredentialsNameText.addModifyListener(new ModifyListener() {
+        pathToCredentials.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
-                        pathToCredentialsNameText.getText());
+                		pathToCredentials.getText());
                 pathToCredentials.setVisible(credentialsBtn.getSelection());
                 checkFieldsValue();
             }
