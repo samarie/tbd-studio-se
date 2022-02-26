@@ -560,7 +560,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         regionNameText.setEditable(isEditable);
         jarsBucketNameText.setEditable(isEditable);
         pathToCredentials.setEditable(isEditable);
-        credentialTypeCombo.setEditable(isEditable);
         oauthTokenText.setEditable(isEditable);
     }
 
