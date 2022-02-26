@@ -875,7 +875,7 @@ public class HCRepositoryUtil {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS, defaultPathToGoogleCredentials);
         }
         
-        String defaultGoogleOauthToken = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_CLUSTER_ID.getName());
+        String defaultGoogleOauthToken = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.OAUTH_ACCESS_TOKEN.getName());
         if (defaultGoogleOauthToken != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, defaultGoogleOauthToken);
         }
