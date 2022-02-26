@@ -67,7 +67,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 
     protected Map<ComponentType, String> buildCustomVersionDisplayNames() {
         Map<ComponentType, String> result = new HashMap<>();
-        esult.put(ComponentType.HIVE, HIVE_DATAPROC_DISPLAY);
+        result.put(ComponentType.HIVE, HIVE_DATAPROC_DISPLAY);
         return result;
     }
 
