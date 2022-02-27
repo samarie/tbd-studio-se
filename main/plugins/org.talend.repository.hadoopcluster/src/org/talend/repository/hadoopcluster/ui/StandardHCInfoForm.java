@@ -1600,6 +1600,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         pathToCredentials.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
+            	String credentialName = credentialTypeCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
                 		pathToCredentials.getText());
                 pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
@@ -1610,6 +1611,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         oauthTokenText.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
+            	String credentialName = credentialTypeCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, EncryptionUtil.getValue(oauthTokenText.getText(), true));
                 oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
                 checkFieldsValue();
