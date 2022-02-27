@@ -428,7 +428,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
             jarsBucketNameText.setText(jarsBucketValue);
             
-            credentialsBtn.setEnabled(false);
+            credentialsBtn.setEnabled(true);
+            credentialsBtn.setSelection(false);
             
             String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_AUTH_MODE));
             if (authModeValue != null) {
