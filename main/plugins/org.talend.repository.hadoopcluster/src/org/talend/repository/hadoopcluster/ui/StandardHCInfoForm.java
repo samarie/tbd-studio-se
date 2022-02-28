@@ -446,9 +446,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             
             String pathToGoogleCredentials = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
             pathToCredentials.setText(pathToGoogleCredentials);
+            pathToCredentials.setVisible(false);
             
             String oauthTokenValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
             oauthTokenText.setText(jarsBucketValue);
+            oauthTokenText.setVisible(false);
        }
     }
 
@@ -1594,6 +1596,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 getConnection().getParameters().put(ConnParameterKeys.CONN_AUTH_MODE,
                     	EDataprocAuthType.getDataprocAuthTypeByDisplayName(credentialName).getName());
                 credentialTypeCombo.setVisible(credentialsBtn.getSelection());
+                updateForm();
                 checkFieldsValue();
             }
         });
