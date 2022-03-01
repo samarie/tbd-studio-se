@@ -1608,6 +1608,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
                 		pathToCredentials.getText());
                 pathToCredentials.setVisible(EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+                oauthTokenText.setVisible(false);
                 checkFieldsValue();
             }
         });
@@ -1618,6 +1619,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	String credentialName = credentialTypeCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, EncryptionUtil.getValue(oauthTokenText.getText(), true));
                 oauthTokenText.setVisible(EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
+                pathToCredentials.setVisible(false);
                 checkFieldsValue();
             }
         });
@@ -2282,28 +2284,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 	                return false;
 	            }
 	        }
-	
-	        //Dataproc
-	        if (!validText(projectIdNameText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.projectId")); //$NON-NLS-1$
-	                return false;
-	        }
-	
-	        if (!validText(clusterIdNameText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.clusterId")); //$NON-NLS-1$
-	                return false;
-	        }
-	
-	        if (!validText(regionNameText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.region")); //$NON-NLS-1$
-	                return false;
-	        }
 
-	        if (!validText(jarsBucketNameText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.jarsBucket")); //$NON-NLS-1$
-	                return false;
-	         }
-	        
 	        checkServicesBtn.setEnabled(true);
         }
         return true;
@@ -2361,8 +2342,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addContextParams(EHadoopParamName.GoogleClusterId, isUse);
         addContextParams(EHadoopParamName.GoogleRegion, isUse);
         addContextParams(EHadoopParamName.GoogleJarsBucket, isUse);
+        addContextParams(EHadoopParamName.GoogleAuthMode, isUse);
         addContextParams(EHadoopParamName.PathToGoogleCredentials, isUse);
-        addContextParams(EHadoopParamName.oauthToken, isUse);
+        addContextParams(EHadoopParamName.GoogleOauthToken, isUse);
     }
 
         

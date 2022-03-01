@@ -498,6 +498,18 @@ public abstract class AbstractDistribution {
         // Spark Batch BigQuery
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.BIGQUERY_CONFIG_COMPONENT), 
                     ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.BIGQUERY.get(this.getVersion()), true));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.BIGQUERY_INPUT_COMPONENT), 
+        		ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.BIGQUERY.get(this.getVersion()), true));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.BIGQUERY_OUTPUT_COMPONENT), 
+        		ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.BIGQUERY.get(this.getVersion()), true));
+        
+       // Spark Streaming BigQuery
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.BIGQUERY_CONFIG_COMPONENT), 
+                    ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.BIGQUERY.get(this.getVersion()), true));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.BIGQUERY_INPUT_COMPONENT), 
+        		ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.BIGQUERY.get(this.getVersion()), true));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.BIGQUERY_OUTPUT_COMPONENT), 
+        		ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.BIGQUERY.get(this.getVersion()), true));
 
         // DynamoDB nodes ...
         Set<DistributionModuleGroup> dynamoDBBatchNodeModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'", ModuleGroupName.DYNAMODB_BATCH.get(this.getVersion()), true );
