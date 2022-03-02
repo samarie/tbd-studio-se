@@ -55,12 +55,12 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     protected Map<ComponentType, String> customVersionDisplayNames;
 
     public Spark31xDistribution() {
-        this.displayConditions = buildDisplayConditions();
-        this.customVersionDisplayNames = buildCustomVersionDisplayNames();
-        this.moduleGroups = buildModuleGroups();
-        this.nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());
+        displayConditions = buildDisplayConditions();
+        customVersionDisplayNames = buildCustomVersionDisplayNames();
+        moduleGroups = buildModuleGroups();
+        nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());
     }
-
+    
     protected Map<ComponentType, ComponentCondition> buildDisplayConditions() {
         return new HashMap<>();
     }
