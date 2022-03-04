@@ -16,6 +16,10 @@ import java.util.List;
 
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesAzureCredentials;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesBucketCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesS3Credentials;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesSubmitMode;
 
 public interface ISparkDistribution {
 
@@ -28,5 +32,13 @@ public interface ISparkDistribution {
     List<EDatabriksCloudProvider> getSupportCloudProviders();
     
     List<EDatabriksSubmitMode> getRunSubmitMode();
+    
+    List<EKubernetesSubmitMode> getK8sRunSubmitMode();
+    
+    List<EKubernetesBucketCloudProvider> getK8sCloudProvider();
+    
+    List<EKubernetesAzureCredentials> getK8sAzureCredentials();
+    
+    List<EKubernetesS3Credentials> getK8sS3Credentials();
     
 }

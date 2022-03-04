@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.hadoop.distribution;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +24,10 @@ import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesAzureCredentials;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesBucketCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesS3Credentials;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesSubmitMode;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -146,5 +147,21 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
     
     public List<EDatabriksSubmitMode> getRunSubmitMode() {
     	return Arrays.asList(EDatabriksSubmitMode.values());
+    }
+    
+    public List<EKubernetesSubmitMode> getK8sRunSubmitMode() {
+    	return Arrays.asList(EKubernetesSubmitMode.values());
+    }
+    
+    public List<EKubernetesBucketCloudProvider> getK8sCloudProvider() {
+    	return Arrays.asList(EKubernetesBucketCloudProvider.values());
+    }
+    
+    public List<EKubernetesAzureCredentials> getK8sAzureCredentials() {
+    	return Arrays.asList(EKubernetesAzureCredentials.values());
+    }
+    
+    public List<EKubernetesS3Credentials> getK8sS3Credentials() {
+    	return Arrays.asList(EKubernetesS3Credentials.values());
     }
 }

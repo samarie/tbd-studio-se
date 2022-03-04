@@ -75,6 +75,10 @@ import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesAzureCredentials;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesBucketCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesS3Credentials;
+import org.talend.hadoop.distribution.constants.databricks.EKubernetesSubmitMode;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -254,6 +258,56 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText tokenText;
 
     private LabelledText dbfsDepFolderText;
+    
+    private Group kubernetesGroup;
+    
+    private LabelledCombo k8sSubmitMode;
+    
+    private LabelledText k8sMaster;
+    
+    private LabelledText k8sInstances;
+    
+    private Button k8sUseRegistrySecret;
+    
+    private LabelledText k8sRegistrySecret;
+    
+    private LabelledText k8sImage;
+    
+    private LabelledText k8sNamespace;
+    
+    private LabelledText k8sServiceAccount;
+
+    private LabelledCombo k8sDistUpload;
+    
+    private LabelledText k8sS3Bucket;
+    
+    private LabelledText k8sS3Folder;
+    
+    private LabelledCombo k8sS3Credentials;
+    
+    private LabelledText k8sS3AccessKey;
+    
+    private LabelledText k8sS3SecretKey;
+    
+    private LabelledText k8sBlobAccount;
+    
+    private LabelledText k8sBlobContainer;
+    
+    private LabelledText k8sBlobSecretKey;
+    
+    private LabelledText k8sAzureAccount;
+    
+    private LabelledCombo k8sAzureCredentials;
+    
+    private LabelledText k8sAzureContainer;
+    
+    private LabelledText k8sAzureSecretKey;
+    
+    private LabelledText k8sAzureAADKey;
+    
+    private LabelledText k8sAzureAADClientID;
+    
+    private LabelledText k8sAzureAADDirectoryID;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -389,6 +443,114 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String folder = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
             dbfsDepFolderText.setText(folder);
+            
+            String k8sSubmitModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_SUBMIT_MODE);
+            if (k8sSubmitModeValue != null) {
+            	this.k8sSubmitMode.setText(getK8sSubmitModeByValue(k8sSubmitModeValue).getLabel());
+            } else {
+            	this.k8sSubmitMode.setText(EKubernetesSubmitMode.SPARK_SUBMIT.getLabel());
+            }
+            
+            String k8sMaster = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER));
+            this.k8sMaster.setText(k8sMaster);
+            
+            String k8sInstances = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES));
+            this.k8sInstances.setText(k8sInstances);
+            
+            String k8sUseRegistrySecret = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET_CHECK));
+            this.k8sUseRegistrySecret.setText(k8sUseRegistrySecret);
+            
+            String k8sRegistrySecret = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET));
+            this.k8sRegistrySecret.setText(k8sRegistrySecret);
+            
+            String k8sImage = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE));
+            this.k8sImage.setText(k8sImage);
+            
+            String k8sNamespace = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE));
+            this.k8sNamespace.setText(k8sNamespace);
+            
+            String k8sServiceAccount = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT));
+            this.k8sServiceAccount.setText(k8sServiceAccount);
+            
+            String k8sDistUploadValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD);
+            if (k8sSubmitModeValue != null) {
+            	this.k8sDistUpload.setText(getK8sDistUploadByValue(k8sDistUploadValue).getLabel());
+            } else {
+            	this.k8sDistUpload.setText(EKubernetesBucketCloudProvider.S3.getLabel());
+            }
+            
+            String k8sS3Bucket = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET));
+            this.k8sS3Bucket.setText(k8sS3Bucket);
+            
+            String k8sS3Folder = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER));
+            this.k8sS3Folder.setText(k8sS3Folder);
+            
+            String k8sS3CredentialsValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS);
+            if (k8sSubmitModeValue != null) {
+            	this.k8sS3Credentials.setText(getK8sS3CredentialsByValue(k8sS3CredentialsValue).getLabel());
+            } else {
+            	this.k8sS3Credentials.setText(EKubernetesS3Credentials.ACCESSANDSECRET.getLabel());
+            }
+            
+            String k8sS3AccessKey = StringUtils
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY), false));
+            this.k8sS3AccessKey.setText(k8sS3AccessKey);
+            
+            String k8sS3SecretKey = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY));
+            this.k8sS3SecretKey.setText(k8sS3SecretKey);
+            
+            String k8sBlobAccount = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT));
+        	this.k8sBlobAccount.setText(k8sBlobAccount);
+            
+            String k8sBlobContainer = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER));
+            this.k8sBlobContainer.setText(k8sBlobContainer);
+            
+            String k8sBlobSecretKey = StringUtils
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY), false));
+            this.k8sBlobSecretKey.setText(k8sBlobSecretKey);
+            
+            String k8sAzureAccount = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT));
+            this.k8sAzureAccount.setText(k8sAzureAccount);
+            
+            String k8sAzureCredentialsValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS);
+            if (k8sSubmitModeValue != null) {
+            	this.k8sAzureCredentials.setText(getK8sAzureCredentialsByValue(k8sAzureCredentialsValue).getLabel());
+            } else {
+            	this.k8sAzureCredentials.setText(EKubernetesAzureCredentials.SECRET.getLabel());
+            }
+            
+            String k8sAzureContainer = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER));
+            this.k8sAzureContainer.setText(k8sAzureContainer);
+            
+            String k8sAzureSecretKey = StringUtils
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY), false));
+            this.k8sAzureSecretKey.setText(k8sAzureSecretKey);
+            
+            String k8sAzureAADKey = StringUtils
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY), false));
+            this.k8sAzureAADKey.setText(k8sAzureAADKey);
+            
+            String k8sAzureAADClientID = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID));
+            this.k8sAzureAADClientID.setText(k8sAzureAADClientID);
+            
+            String k8sAzureAADDirectoryID = StringUtils
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID));
+            this.k8sAzureAADDirectoryID.setText(k8sAzureAADDirectoryID);
         }
     }
 
@@ -548,6 +710,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
         addDatabricksField();
+        addKubernetesField();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -610,6 +773,38 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         dbfsDepFolderText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.dbfsDepFolder"), 1); //$NON-NLS-1$
     }
     
+    private void addKubernetesField() {
+    	kubernetesGroup = Form.createGroup(bigComposite, 2, Messages.getString("KubernetesInfoForm.text.kubernetesGroup"), 110); //$NON-NLS-1$
+    	kubernetesGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    	k8sSubmitMode = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sSubmitMode"), "", //$NON-NLS-1$ $NON-NLS-2$
+                getK8sSubmitMode());
+    	k8sMaster = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sMaster"), 1); //$NON-NLS-1$
+    	k8sInstances = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sInstances"), 1); //$NON-NLS-1$
+    	k8sUseRegistrySecret = new Button(kubernetesGroup, SWT.CHECK);
+    	k8sUseRegistrySecret.setText(Messages.getString("KubernetesInfoForm.text.k8sUseRegistrySecret")); //$NON-NLS-1$
+    	k8sUseRegistrySecret.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
+    	k8sRegistrySecret = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sRegistrySecret"), 1); //$NON-NLS-1$
+    	k8sImage = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sImage"), 1); //$NON-NLS-1$
+    	k8sNamespace = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sNamespace"), 1); //$NON-NLS-1$
+    	k8sServiceAccount = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sServiceAccount"), 1); //$NON-NLS-1$
+    	k8sDistUpload = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sDistUpload"), "", getK8sCloudProvider()); //$NON-NLS-1$
+    	k8sS3Bucket = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3Bucket"), 1); //$NON-NLS-1$
+    	k8sS3Folder = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3Folder"), 1); //$NON-NLS-1$
+    	k8sS3Credentials = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3Credentials"), "", getK8sS3Credentials()); //$NON-NLS-1$
+    	k8sS3AccessKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3AccessKey"), 1); //$NON-NLS-1$
+    	k8sS3SecretKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3SecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	k8sBlobAccount = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobAccount"), 1); //$NON-NLS-1$
+    	k8sBlobContainer = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobContainer"), 1); //$NON-NLS-1$
+    	k8sBlobSecretKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobSecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	k8sAzureAccount = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAccount"), 1); //$NON-NLS-1$
+    	k8sAzureCredentials = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureCredentials"), "", getK8sAzureCredentials()); //$NON-NLS-1$
+    	k8sAzureContainer = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureContainer"), 1); //$NON-NLS-1$
+    	k8sAzureSecretKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureSecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	k8sAzureAADKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	k8sAzureAADClientID = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADClientID"), 1); //$NON-NLS-1$
+    	k8sAzureAADDirectoryID = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADDirectoryID"), 1); //$NON-NLS-1$
+    }
+    
     private List<String> getRunSubmitModes() {
     	List<String> runSubmitLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
@@ -634,6 +829,58 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
         }
         return providerLableNames;
+    }
+    
+    private List<String> getK8sCloudProvider() {
+    	List<String> bucketCloudLabelNames = new ArrayList<String>();
+        if (sparkDistribution != null) {
+            List<EKubernetesBucketCloudProvider> runSubmitModes = sparkDistribution.getK8sCloudProvider();
+            if (runSubmitModes != null) {
+            	bucketCloudLabelNames = runSubmitModes.stream().map(mode -> {
+                    return mode.getLabel();
+                }).collect(Collectors.toList());
+            }
+        }
+        return bucketCloudLabelNames;
+    }
+    
+    private List<String> getK8sSubmitMode() {
+        List<String> providerLableNames = new ArrayList<String>();
+        if (sparkDistribution != null) {
+            List<EKubernetesBucketCloudProvider> supportCloudProviders = sparkDistribution.getK8sCloudProvider();
+            if (supportCloudProviders != null) {
+                providerLableNames = supportCloudProviders.stream().map(provider -> {
+                    return provider.getLabel();
+                }).collect(Collectors.toList());
+            }
+        }
+        return providerLableNames;
+    }
+    
+    private List<String> getK8sS3Credentials() {
+    	List<String> bucketCloudLabelNames = new ArrayList<String>();
+        if (sparkDistribution != null) {
+            List<EKubernetesS3Credentials> runSubmitModes = sparkDistribution.getK8sS3Credentials();
+            if (runSubmitModes != null) {
+            	bucketCloudLabelNames = runSubmitModes.stream().map(mode -> {
+                    return mode.getLabel();
+                }).collect(Collectors.toList());
+            }
+        }
+        return bucketCloudLabelNames;
+    }
+    
+    private List<String> getK8sAzureCredentials() {
+    	List<String> bucketCloudLabelNames = new ArrayList<String>();
+        if (sparkDistribution != null) {
+            List<EKubernetesAzureCredentials> runSubmitModes = sparkDistribution.getK8sAzureCredentials();
+            if (runSubmitModes != null) {
+            	bucketCloudLabelNames = runSubmitModes.stream().map(mode -> {
+                    return mode.getLabel();
+                }).collect(Collectors.toList());
+            }
+        }
+        return bucketCloudLabelNames;
     }
 
     private void addCustomFields() {
@@ -1443,6 +1690,246 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+        
+        k8sSubmitMode.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String runModeLableName = k8sSubmitMode.getText();
+                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SUBMIT_MODE,
+                    		getK8sSubmitModeByName(runModeLableName).getValue());
+                    checkFieldsValue();
+            }
+        });
+        
+        k8sMaster.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER,
+                		k8sMaster.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sInstances.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES,
+                		k8sInstances.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sUseRegistrySecret.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	k8sRegistrySecret.setVisible(k8sUseRegistrySecret.getSelection());
+                updateForm();
+                checkFieldsValue();
+            }
+        });
+        
+        k8sRegistrySecret.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET,
+                		k8sRegistrySecret.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sImage.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE,
+                		k8sImage.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sNamespace.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE,
+                		k8sNamespace.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sServiceAccount.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT,
+                		k8sServiceAccount.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sDistUpload.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String runModeLableName = k8sDistUpload.getText();
+                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD,
+                    		getK8sDistUploadByName(runModeLableName).getValue());
+                    checkFieldsValue();
+            }
+        });
+        
+        k8sS3Bucket.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET,
+                		k8sS3Bucket.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sS3Folder.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER,
+                		k8sS3Folder.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sS3Credentials.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String runModeLableName = k8sS3Credentials.getText();
+                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS,
+                    		getK8sS3CredentialsByName(runModeLableName).getValue());
+                    checkFieldsValue();
+            }
+        });
+        
+        k8sS3AccessKey.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY,
+                		k8sS3AccessKey.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sS3SecretKey.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY, EncryptionUtil.getValue(k8sS3SecretKey.getText(), true));
+                checkFieldsValue();
+            }
+        });
+        
+        k8sBlobAccount.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT,
+                		k8sBlobAccount.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sBlobContainer.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER,
+                		k8sBlobContainer.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sBlobSecretKey.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY, EncryptionUtil.getValue(k8sBlobSecretKey.getText(), true));
+                checkFieldsValue();
+            }
+        });
+        
+        k8sAzureAccount.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT,
+                		k8sAzureAccount.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sAzureCredentials.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String runModeLableName = k8sAzureCredentials.getText();
+                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS,
+                    		getK8sAzureCredentialsByName(runModeLableName).getValue());
+                    checkFieldsValue();
+            }
+        });
+        
+        k8sAzureContainer.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER,
+                		k8sAzureContainer.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sAzureSecretKey.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY, EncryptionUtil.getValue(k8sAzureSecretKey.getText(), true));
+                checkFieldsValue();
+            }
+        });
+        
+        k8sAzureAADKey.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY, EncryptionUtil.getValue(k8sAzureAADKey.getText(), true));
+                checkFieldsValue();
+            }
+        });
+        
+        k8sAzureAADClientID.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID,
+                		k8sAzureAADClientID.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        k8sAzureAADDirectoryID.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID,
+                		k8sAzureAADDirectoryID.getText());
+                checkFieldsValue();
+            }
+        });
     }
     
     private void hideFieldsOnSparkMode() {
@@ -1455,29 +1942,35 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	hideControl(authGroup, false);
             	hideControl(webHDFSSSLEncryptionGrp, false);
             	hideControl(dataBricksGroup, true);
+            	hideControl(kubernetesGroup, true);
             } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLableName)) {
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, false);
+            	hideControl(kubernetesGroup, true);
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, true);
+            	hideControl(kubernetesGroup, false);
             } else if (ESparkMode.SPARK_LOCAL.getLabel().equals(sparkModeLableName)) {
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, true);
+            	hideControl(kubernetesGroup, true);
             } else { 
             	hideControl(connectionGroup, true);
             	hideControl(authGroup, true);
             	hideControl(webHDFSSSLEncryptionGrp, true);
             	hideControl(dataBricksGroup, true);
+            	hideControl(kubernetesGroup, true);
             }
     	} else {
     		hideControl(dataBricksGroup, true);
+    		hideControl(kubernetesGroup, true);
     	}
     }
 
@@ -2118,7 +2611,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     @Override
     protected void collectConParameters() {
-    	if (sparkModeCombo != null) {
+    	if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
     		collectYarnConParameters();
     	} else {
     		String sparkModeLableName = sparkModeCombo.getText();
@@ -2127,9 +2620,40 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLableName)) {
             	collectDBRParameters();
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
-            	//TODO
+            	collectK8SParameters();
             }
     	}
+    }
+    
+    private void collectK8SParameters() {
+    	addContextParams(EHadoopParamName.k8sMaster, true);
+    	addContextParams(EHadoopParamName.k8sInstances, true);
+		addContextParams(EHadoopParamName.k8sRegistrySecret, k8sUseRegistrySecret.getSelection());
+		addContextParams(EHadoopParamName.k8sImage, true);
+		addContextParams(EHadoopParamName.k8sNamespace, true);
+		addContextParams(EHadoopParamName.k8sServiceAccount, true);
+		
+		String cloudProvider = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD);
+		if(EKubernetesBucketCloudProvider.S3.getValue().equals(cloudProvider)) {
+			String s3Credentials = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS);
+			if (EKubernetesS3Credentials.ACCESSANDSECRET.getValue().equals(s3Credentials)) {
+				addContextParams(EHadoopParamName.k8sS3Bucket, true);
+				addContextParams(EHadoopParamName.k8sS3Folder, true);
+				addContextParams(EHadoopParamName.k8sS3AccessKey, true);
+				addContextParams(EHadoopParamName.k8sS3SecretKey, true);
+			}
+		} else if (EKubernetesBucketCloudProvider.BLOB.getValue().equals(cloudProvider)) {
+			addContextParams(EHadoopParamName.k8sBlobAccount, true);
+			addContextParams(EHadoopParamName.k8sBlobContainer, true);
+			addContextParams(EHadoopParamName.k8sBlobSecretKey, true);
+		} else if (EKubernetesBucketCloudProvider.AZURE.getValue().equals(cloudProvider)) {
+			String azureCredentials = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS);
+			if (EKubernetesAzureCredentials.SECRET.getValue().equals(azureCredentials)) {
+				addContextParams(EHadoopParamName.k8sAzureCredentials, true);
+				addContextParams(EHadoopParamName.k8sAzureContainer, true);
+				addContextParams(EHadoopParamName.k8sAzureSecretKey, true);
+			}
+		}
     }
     
     protected void collectDBRParameters() {
@@ -2271,6 +2795,102 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
         }
         return EDatabriksSubmitMode.CREATE_RUN_JOB;
+    }
+    
+    private EKubernetesSubmitMode getK8sSubmitModeByValue(String runModeValue) {
+        if (sparkDistribution != null) {
+            List<EKubernetesSubmitMode> runModes = sparkDistribution.getK8sRunSubmitMode();
+            for (EKubernetesSubmitMode runMode : runModes) {
+                if (StringUtils.equals(runMode.getValue(), runModeValue)) {
+                    return runMode;
+                }
+            }
+        }
+        return EKubernetesSubmitMode.SPARK_SUBMIT;
+    }
+    
+    private EKubernetesSubmitMode getK8sSubmitModeByName(String runModeLableName) {
+        if (sparkDistribution != null) {
+            List<EKubernetesSubmitMode> supportRunModes = sparkDistribution.getK8sRunSubmitMode();
+            for (EKubernetesSubmitMode provider : supportRunModes) {
+                if (StringUtils.equals(provider.getLabel(), runModeLableName)) {
+                    return provider;
+                }
+            }
+        }
+        return EKubernetesSubmitMode.SPARK_SUBMIT;
+    }
+    
+    private EKubernetesBucketCloudProvider getK8sDistUploadByValue(String runModeValue) {
+        if (sparkDistribution != null) {
+            List<EKubernetesBucketCloudProvider> runModes = sparkDistribution.getK8sCloudProvider();
+            for (EKubernetesBucketCloudProvider runMode : runModes) {
+                if (StringUtils.equals(runMode.getValue(), runModeValue)) {
+                    return runMode;
+                }
+            }
+        }
+        return EKubernetesBucketCloudProvider.S3;
+    }
+    
+    private EKubernetesBucketCloudProvider getK8sDistUploadByName(String runModeLableName) {
+        if (sparkDistribution != null) {
+            List<EKubernetesBucketCloudProvider> supportRunModes = sparkDistribution.getK8sCloudProvider();
+            for (EKubernetesBucketCloudProvider provider : supportRunModes) {
+                if (StringUtils.equals(provider.getLabel(), runModeLableName)) {
+                    return provider;
+                }
+            }
+        }
+        return EKubernetesBucketCloudProvider.S3;
+    }
+    
+    private EKubernetesS3Credentials getK8sS3CredentialsByValue(String runModeValue) {
+        if (sparkDistribution != null) {
+            List<EKubernetesS3Credentials> runModes = sparkDistribution.getK8sS3Credentials();
+            for (EKubernetesS3Credentials runMode : runModes) {
+                if (StringUtils.equals(runMode.getValue(), runModeValue)) {
+                    return runMode;
+                }
+            }
+        }
+        return EKubernetesS3Credentials.ACCESSANDSECRET;
+    }
+    
+    private EKubernetesS3Credentials getK8sS3CredentialsByName(String runModeLableName) {
+        if (sparkDistribution != null) {
+            List<EKubernetesS3Credentials> supportRunModes = sparkDistribution.getK8sS3Credentials();
+            for (EKubernetesS3Credentials provider : supportRunModes) {
+                if (StringUtils.equals(provider.getLabel(), runModeLableName)) {
+                    return provider;
+                }
+            }
+        }
+        return EKubernetesS3Credentials.ACCESSANDSECRET;
+    }
+    
+    private EKubernetesAzureCredentials getK8sAzureCredentialsByValue(String runModeValue) {
+        if (sparkDistribution != null) {
+            List<EKubernetesAzureCredentials> runModes = sparkDistribution.getK8sAzureCredentials();
+            for (EKubernetesAzureCredentials runMode : runModes) {
+                if (StringUtils.equals(runMode.getValue(), runModeValue)) {
+                    return runMode;
+                }
+            }
+        }
+        return EKubernetesAzureCredentials.SECRET;
+    }
+    
+    private EKubernetesAzureCredentials getK8sAzureCredentialsByName(String runModeLableName) {
+        if (sparkDistribution != null) {
+            List<EKubernetesAzureCredentials> supportRunModes = sparkDistribution.getK8sAzureCredentials();
+            for (EKubernetesAzureCredentials provider : supportRunModes) {
+                if (StringUtils.equals(provider.getLabel(), runModeLableName)) {
+                    return provider;
+                }
+            }
+        }
+        return EKubernetesAzureCredentials.SECRET;
     }
 
     private EDatabriksCloudProvider getDatabriksCloudProviderByName(String providerLableName) {
