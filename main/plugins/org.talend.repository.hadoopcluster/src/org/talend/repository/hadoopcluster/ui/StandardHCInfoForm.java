@@ -1584,8 +1584,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 	
             	credentialTypeCombo.setVisible(credentialsBtn.getSelection());
             	String credentialName = credentialTypeCombo.getText();
-            	pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
-            	oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
+            	//pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+            	//oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
                 checkFieldsValue();
             }
         });
@@ -1597,6 +1597,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE,
                     	EDataprocAuthType.getDataprocAuthTypeByDisplayName(credentialName).getName());
                 credentialTypeCombo.setVisible(credentialsBtn.getSelection());
+                pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+            	oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
                 checkFieldsValue();
             }
         });
@@ -1607,7 +1609,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             	String credentialName = credentialTypeCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
                 		pathToCredentials.getText());
-                pathToCredentials.setVisible(credentialsBtn.isEnabled() && credentialsBtn.getVisible() && "Service account".equals(credentialName));
+               // pathToCredentials.setVisible(credentialsBtn.isEnabled() && credentialsBtn.getVisible() && "Service account".equals(credentialName));
                 checkFieldsValue();
             }
         });
@@ -1617,7 +1619,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             public void modifyText(final ModifyEvent e) {
             	String credentialName = credentialTypeCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, EncryptionUtil.getValue(oauthTokenText.getText(), true));
-                oauthTokenText.setVisible(credentialsBtn.isEnabled() && credentialsBtn.getVisible() && "OAuth2 Access Token".equals(credentialName));
+                //oauthTokenText.setVisible(credentialsBtn.isEnabled() && credentialsBtn.getVisible() && "OAuth2 Access Token".equals(credentialName));
                 checkFieldsValue();
             }
         });
