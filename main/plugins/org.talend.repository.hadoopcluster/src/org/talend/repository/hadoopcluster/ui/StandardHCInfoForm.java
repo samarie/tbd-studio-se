@@ -261,6 +261,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     
     private Group kubernetesGroup;
     
+    private Group kubernetesS3Group;
+    
+    private Group kubernetesAzureGroup;
+    
+    private Group kubernetesBlobGroup;
+    
     private LabelledCombo k8sSubmitMode;
     
     private LabelledText k8sMaster;
@@ -784,21 +790,30 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     	k8sNamespace = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sNamespace"), 1); //$NON-NLS-1$
     	k8sServiceAccount = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sServiceAccount"), 1); //$NON-NLS-1$
     	k8sDistUpload = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sDistUpload"), "", getK8sCloudProvider()); //$NON-NLS-1$
-    	k8sS3Bucket = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3Bucket"), 1); //$NON-NLS-1$
-    	k8sS3Folder = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3Folder"), 1); //$NON-NLS-1$
-    	k8sS3Credentials = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3Credentials"), "", getK8sS3Credentials()); //$NON-NLS-1$
-    	k8sS3AccessKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3AccessKey"), 1); //$NON-NLS-1$
-    	k8sS3SecretKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sS3SecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
-    	k8sBlobAccount = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobAccount"), 1); //$NON-NLS-1$
-    	k8sBlobContainer = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobContainer"), 1); //$NON-NLS-1$
-    	k8sBlobSecretKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobSecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
-    	k8sAzureAccount = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAccount"), 1); //$NON-NLS-1$
-    	k8sAzureCredentials = new LabelledCombo(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureCredentials"), "", getK8sAzureCredentials()); //$NON-NLS-1$
-    	k8sAzureContainer = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureContainer"), 1); //$NON-NLS-1$
-    	k8sAzureSecretKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureSecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
-    	k8sAzureAADKey = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
-    	k8sAzureAADClientID = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADClientID"), 1); //$NON-NLS-1$
-    	k8sAzureAADDirectoryID = new LabelledText(kubernetesGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADDirectoryID"), 1); //$NON-NLS-1$
+    	
+    	kubernetesS3Group = Form.createGroup(bigComposite, 2, Messages.getString("KubernetesInfoForm.text.temporaryFS"), 110); //$NON-NLS-1$
+    	kubernetesS3Group.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    	k8sS3Bucket = new LabelledText(kubernetesS3Group, Messages.getString("KubernetesInfoForm.text.k8sS3Bucket"), 1); //$NON-NLS-1$
+    	k8sS3Folder = new LabelledText(kubernetesS3Group, Messages.getString("KubernetesInfoForm.text.k8sS3Folder"), 1); //$NON-NLS-1$
+    	k8sS3Credentials = new LabelledCombo(kubernetesS3Group, Messages.getString("KubernetesInfoForm.text.k8sS3Credentials"), "", getK8sS3Credentials()); //$NON-NLS-1$
+    	k8sS3AccessKey = new LabelledText(kubernetesS3Group, Messages.getString("KubernetesInfoForm.text.k8sS3AccessKey"), 1); //$NON-NLS-1$
+    	k8sS3SecretKey = new LabelledText(kubernetesS3Group, Messages.getString("KubernetesInfoForm.text.k8sS3SecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	
+    	kubernetesBlobGroup = Form.createGroup(bigComposite, 2, Messages.getString("KubernetesInfoForm.text.temporaryFS"), 110); //$NON-NLS-1$
+    	kubernetesBlobGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    	k8sBlobAccount = new LabelledText(kubernetesBlobGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobAccount"), 1); //$NON-NLS-1$
+    	k8sBlobContainer = new LabelledText(kubernetesBlobGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobContainer"), 1); //$NON-NLS-1$
+    	k8sBlobSecretKey = new LabelledText(kubernetesBlobGroup, Messages.getString("KubernetesInfoForm.text.k8sBlobSecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	
+    	kubernetesAzureGroup = Form.createGroup(bigComposite, 2, Messages.getString("KubernetesInfoForm.text.temporaryFS"), 110); //$NON-NLS-1$
+    	kubernetesAzureGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    	k8sAzureAccount = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAccount"), 1); //$NON-NLS-1$
+    	k8sAzureContainer = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureContainer"), 1); //$NON-NLS-1$
+    	k8sAzureCredentials = new LabelledCombo(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureCredentials"), "", getK8sAzureCredentials()); //$NON-NLS-1$
+    	k8sAzureSecretKey = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureSecretKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	k8sAzureAADKey = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+    	k8sAzureAADClientID = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADClientID"), 1); //$NON-NLS-1$
+    	k8sAzureAADDirectoryID = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADDirectoryID"), 1); //$NON-NLS-1$
     }
     
     private List<String> getRunSubmitModes() {
@@ -1775,6 +1790,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 String runModeLableName = k8sDistUpload.getText();
                     getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD,
                     		getK8sDistUploadByName(runModeLableName).getValue());
+                    hideK8sFieldsOnDistUpload();
                     checkFieldsValue();
             }
         });
@@ -1806,6 +1822,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 String runModeLableName = k8sS3Credentials.getText();
                     getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS,
                     		getK8sS3CredentialsByName(runModeLableName).getValue());
+                    hideK8sS3Creds();
                     checkFieldsValue();
             }
         });
@@ -1875,6 +1892,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 String runModeLableName = k8sAzureCredentials.getText();
                     getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS,
                     		getK8sAzureCredentialsByName(runModeLableName).getValue());
+                    hideK8sAzureCreds();
                     checkFieldsValue();
             }
         });
@@ -2225,6 +2243,48 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             adaptFormToEditable();
         }
         hideFieldsOnSparkMode();
+        hideK8sFieldsOnDistUpload();
+        k8sRegistrySecret.setVisible(k8sUseRegistrySecret.getSelection());
+        
+    }
+    
+    private void hideK8sFieldsOnDistUpload() {
+    	boolean isK8sS3 = "S3".equals(k8sDistUpload.getText());
+        boolean isK8sAzure = "Azure".equals(k8sDistUpload.getText());
+        boolean isK8sBlob = "Blob".equals(k8sDistUpload.getText());
+    	k8sS3Bucket.setVisible(isK8sS3);
+    	k8sS3Folder.setVisible(isK8sS3);
+    	k8sS3Credentials.setVisible(isK8sS3);
+    	k8sS3AccessKey.setVisible(isK8sS3);
+    	k8sS3SecretKey.setVisible(isK8sS3);
+    	kubernetesS3Group.setVisible(isK8sS3);
+    	k8sBlobAccount.setVisible(isK8sBlob);
+    	k8sBlobContainer.setVisible(isK8sBlob);
+    	k8sBlobSecretKey.setVisible(isK8sBlob);
+    	kubernetesBlobGroup.setVisible(isK8sBlob);
+    	boolean isAccessKey = EKubernetesAzureCredentials.SECRET.getLabel().equals(k8sAzureCredentials.getText());
+    	kubernetesAzureGroup.setVisible(isK8sAzure);
+    	k8sAzureAccount.setVisible(isK8sAzure);
+    	k8sAzureCredentials.setVisible(isK8sAzure);
+    	k8sAzureContainer.setVisible(isK8sAzure);
+    	k8sAzureSecretKey.setVisible(isK8sAzure && isAccessKey);
+    	k8sAzureAADKey.setVisible(isK8sAzure && false);
+    	k8sAzureAADDirectoryID.setVisible(isK8sAzure && false);
+    	k8sAzureAADClientID.setVisible(isK8sAzure && false);
+    }
+    
+    private void hideK8sAzureCreds() {
+    	boolean isAccessKey = EKubernetesAzureCredentials.SECRET.getLabel().equals(k8sAzureCredentials.getText());
+    	k8sAzureSecretKey.setVisible(isAccessKey);
+    	k8sAzureAADKey.setVisible(false);
+    	k8sAzureAADDirectoryID.setVisible(false);
+    	k8sAzureAADClientID.setVisible(false);
+    }
+    
+    private void hideK8sS3Creds() {
+    	boolean isAccessKey = EKubernetesS3Credentials.ACCESSANDSECRET.getLabel().equals(k8sS3Credentials.getText());
+    	k8sS3AccessKey.setVisible(isAccessKey);
+    	k8sS3SecretKey.setVisible(isAccessKey);
     }
 
     private void hideMaprTicketControl(boolean hide) {
