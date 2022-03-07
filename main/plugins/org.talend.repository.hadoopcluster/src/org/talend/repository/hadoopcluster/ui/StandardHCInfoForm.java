@@ -459,10 +459,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES));
             this.k8sInstances.setText(k8sInstances);
             
-            String k8sUseRegistrySecret = StringUtils
-                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET_CHECK));
-            this.k8sUseRegistrySecret.setText(k8sUseRegistrySecret);
-            
             String k8sRegistrySecret = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET));
             this.k8sRegistrySecret.setText(k8sRegistrySecret);
@@ -480,7 +476,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             this.k8sServiceAccount.setText(k8sServiceAccount);
             
             String k8sDistUploadValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD);
-            if (k8sSubmitModeValue != null) {
+            if (k8sDistUploadValue != null) {
             	this.k8sDistUpload.setText(getK8sDistUploadByValue(k8sDistUploadValue).getLabel());
             } else {
             	this.k8sDistUpload.setText(EKubernetesBucketCloudProvider.S3.getLabel());
@@ -495,18 +491,18 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             this.k8sS3Folder.setText(k8sS3Folder);
             
             String k8sS3CredentialsValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS);
-            if (k8sSubmitModeValue != null) {
+            if (k8sS3CredentialsValue != null) {
             	this.k8sS3Credentials.setText(getK8sS3CredentialsByValue(k8sS3CredentialsValue).getLabel());
             } else {
             	this.k8sS3Credentials.setText(EKubernetesS3Credentials.ACCESSANDSECRET.getLabel());
             }
             
             String k8sS3AccessKey = StringUtils
-                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY), false));
+                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY));
             this.k8sS3AccessKey.setText(k8sS3AccessKey);
             
             String k8sS3SecretKey = StringUtils
-                    .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY));
+                    .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY), false));
             this.k8sS3SecretKey.setText(k8sS3SecretKey);
             
             String k8sBlobAccount = StringUtils
@@ -526,7 +522,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             this.k8sAzureAccount.setText(k8sAzureAccount);
             
             String k8sAzureCredentialsValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS);
-            if (k8sSubmitModeValue != null) {
+            if (k8sAzureCredentialsValue != null) {
             	this.k8sAzureCredentials.setText(getK8sAzureCredentialsByValue(k8sAzureCredentialsValue).getLabel());
             } else {
             	this.k8sAzureCredentials.setText(EKubernetesAzureCredentials.SECRET.getLabel());
@@ -847,7 +843,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private List<String> getK8sSubmitMode() {
         List<String> providerLableNames = new ArrayList<String>();
         if (sparkDistribution != null) {
-            List<EKubernetesBucketCloudProvider> supportCloudProviders = sparkDistribution.getK8sCloudProvider();
+            List<EKubernetesSubmitMode> supportCloudProviders = sparkDistribution.getK8sRunSubmitMode();
             if (supportCloudProviders != null) {
                 providerLableNames = supportCloudProviders.stream().map(provider -> {
                     return provider.getLabel();

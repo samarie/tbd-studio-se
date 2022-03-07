@@ -1001,6 +1001,121 @@ public class HCRepositoryUtil {
         if (databricksDBFSDepFolder != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER, databricksDBFSDepFolder);
         }
+        String tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_SUBMIT_MODE.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SUBMIT_MODE, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_MASTER.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_INSTANCES.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_REGISTRYSECRET.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_IMAGE.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_NAMESPACE.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_SERVICEACCOUNT.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_DISTUPLOAD.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_S3BUCKET.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_S3FOLDER.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_S3CREDENTIALS.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_S3ACCESSKEY.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_S3SECRETKEY.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_BLOBACCOUNT.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_BLOBCONTAINER.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_BLOBSECRETKEY.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZUREACCOUNT.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZURECREDENTIALS.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZURECONTAINER.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZURESECRETKEY.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZUREAADKEY.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZUREAADCLIENTID.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID, tempK8sValue);
+        }
+        tempK8sValue = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.K8S_AZUREAADDIRECTORYID.getName());
+        if (databricksDBFSDepFolder != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID, tempK8sValue);
+        }
     }
 
     public static String getRepositoryTypeOfHadoopSubItem(Item item) {
