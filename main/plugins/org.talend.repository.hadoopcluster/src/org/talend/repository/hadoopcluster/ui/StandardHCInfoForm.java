@@ -1584,8 +1584,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 	
             	credentialTypeCombo.setVisible(credentialsBtn.getSelection());
             	String credentialName = credentialTypeCombo.getText();
-            	//pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
-            	//oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
+            	pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+            	oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
                 checkFieldsValue();
             }
         });
