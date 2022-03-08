@@ -25,7 +25,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="flogger-0.5.1.jar" name="flogger-0.5.1.jar" mvn_uri="mvn:com.google.flogger/flogger/0.5.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="flogger-system-backend-0.5.1.jar" name="flogger-system-backend-0.5.1.jar" mvn_uri="mvn:com.google.flogger/flogger-system-backend/0.5.1"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="guava-14.0.1.jar" name="guava-14.0.1.jar" mvn_uri="mvn:com.google.guava/guava/14.0.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="guava-27.0-jre.jar" name="guava-27.0-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.0-jre"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-auth-3.2.0.jar" name="hadoop-auth-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-common-3.2.0.jar" name="hadoop-common-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-hdfs-client-3.2.0.jar" name="hadoop-hdfs-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.0"/>
@@ -221,7 +221,7 @@
             <library id="commons-lang-2.6.jar"/>
             <library id="commons-lang3-3.10.jar"/>
             <library id="commons-logging-1.1.3.jar"/>
-            <library id="guava-14.0.1.jar"/>
+            <library id="guava-27.0-jre.jar"/>
             <library id="hadoop-auth-3.2.0.jar"/>
             <library id="hadoop-common-3.2.0.jar"/>
             <library id="hadoop-hdfs-client-3.2.0.jar"/>
