@@ -25,7 +25,6 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="flogger-0.5.1.jar" name="flogger-0.5.1.jar" mvn_uri="mvn:com.google.flogger/flogger/0.5.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="flogger-system-backend-0.5.1.jar" name="flogger-system-backend-0.5.1.jar" mvn_uri="mvn:com.google.flogger/flogger-system-backend/0.5.1"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="grpc-context-1.19.0.jar" name="grpc-context-1.19.0.jar" mvn_uri="mvn:io.grpc/grpc-context/1.19.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="guava-27.0-jre.jar" name="guava-27.0-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.0-jre"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-auth-3.2.0.jar" name="hadoop-auth-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-common-3.2.0.jar" name="hadoop-common-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.0"/>
@@ -99,8 +98,6 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="objenesis-2.6.jar" name="objenesis-2.6.jar" mvn_uri="mvn:org.objenesis/objenesis/2.6"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="okhttp-3.12.12.jar" name="okhttp-3.12.12.jar" mvn_uri="mvn:com.squareup.okhttp3/okhttp/3.12.12"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="okio-1.14.0.jar" name="okio-1.14.0.jar" mvn_uri="mvn:com.squareup.okio/okio/1.14.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="opencensus-api-0.21.0.jar" name="opencensus-api-0.21.0.jar" mvn_uri="mvn:io.opencensus/opencensus-api/0.21.0"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="opencensus-contrib-http-util-0.21.0.jar" name="opencensus-contrib-http-util-0.21.0.jar" mvn_uri="mvn:io.opencensus/opencensus-contrib-http-util/0.21.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="oro-2.0.8.jar" name="oro-2.0.8.jar" mvn_uri="mvn:oro/oro/2.0.8"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="orc-core-1.5.10.jar" name="orc-core-1.5.10.jar" mvn_uri="mvn:org.apache.orc/orc-core/1.5.10"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="orc-mapreduce-1.5.10.jar" name="orc-mapreduce-1.5.10.jar" mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.5.10"/>
@@ -469,9 +466,6 @@
             <library id="flogger-0.5.1.jar"/>
             <library id="flogger-system-backend-0.5.1.jar"/>
             <library id="google-http-client-jackson-1.25.0.jar"/>
-            <library id="grpc-context-1.19.0.jar"/>
-            <library id="opencensus-api-0.21.0.jar"/>
-            <library id="opencensus-contrib-http-util-0.21.0.jar"/>
         </libraryNeededGroup>
 
    </extension>
