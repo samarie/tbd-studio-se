@@ -501,6 +501,13 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         	setHadoopConfBtn.setEnabled(false);
         	setHadoopConfBtn.setSelection(true);
         	hadoopConfSpecificJarText.setEditable(true);
+        	sparkModeCombo.setEnabled(!readOnly);
+        	runSubmitCombo.setEnabled(!readOnly);
+        	cloudProviderCombo.setEnabled(!readOnly);
+            endpointText.setEnabled(!readOnly);
+            clusterIDText.setEnabled(!readOnly);
+            tokenText.setEnabled(!readOnly);
+            dbfsDepFolderText.setEnabled(!readOnly);
         }
         
     }
@@ -561,6 +568,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         // setHadoopConfBtn.setEnabled(isEditable);
         hadoopConfSpecificJarText.setEditable(isEditable && setHadoopConfBtn.getSelection());
         browseHadoopConfBtn.setEnabled(isEditable && setHadoopConfBtn.getSelection());
+        
+        sparkModeCombo.setEnabled(isEditable);
+    	runSubmitCombo.setEnabled(isEditable);
+    	cloudProviderCombo.setEnabled(isEditable);
+        endpointText.setEnabled(isEditable);
+        clusterIDText.setEnabled(isEditable);
+        tokenText.setEnabled(isEditable);
+        dbfsDepFolderText.setEnabled(isEditable);
+        
         //Dataproc
         projectIdNameText.setEditable(isEditable);
         clusterIdNameText.setEditable(isEditable);
@@ -2315,7 +2331,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     @Override
     protected void collectConParameters() {
-    	if (sparkModeCombo != null) {
+    	if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
     		collectYarnConParameters();
     	} else {
     		String sparkModeLableName = sparkModeCombo.getText();
