@@ -870,6 +870,11 @@ public class HCRepositoryUtil {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET, defaultGoogleJarsBucket);
         }
         
+        String defaultGoogleAuthMode =  hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_AUTH_MODE.getName());
+        if (defaultGoogleAuthMode != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE, defaultGoogleAuthMode);
+        }
+        
         String defaultPathToGoogleCredentials = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.PATH_TO_GOOGLE_CREDENTIALS.getName());
         if (defaultPathToGoogleCredentials != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS, defaultPathToGoogleCredentials);
