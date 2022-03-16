@@ -13,6 +13,8 @@
 package org.talend.repository.hadoopcluster.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -2285,6 +2287,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     	k8sAzureAADKey.setVisible(isK8sAzure && false);
     	k8sAzureAADDirectoryID.setVisible(isK8sAzure && false);
     	k8sAzureAADClientID.setVisible(isK8sAzure && false);
+    	List<Integer> yPositions = Arrays.asList(kubernetesAzureGroup.getLocation().y, kubernetesS3Group.getLocation().y, kubernetesBlobGroup.getLocation().y);
+    	Integer minY = Collections.min(yPositions);
+    	if (isK8sS3) {
+    		kubernetesS3Group.setLocation(kubernetesS3Group.getLocation().x, minY);
+    	} else if (isK8sAzure) {
+    		kubernetesAzureGroup.setLocation(kubernetesAzureGroup.getLocation().x, minY);
+    	} else if (isK8sBlob) {
+    		kubernetesBlobGroup.setLocation(kubernetesBlobGroup.getLocation().x, minY);
+    	}
     }
     
     private void hideK8sAzureCreds() {
