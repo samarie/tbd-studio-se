@@ -220,6 +220,9 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.DEFINE_GOOGLE_CREDENTIALS.getRepositoryValue().equals(value)) {
             return Boolean.parseBoolean(hcConnection.getParameters().get(
                     ConnParameterKeys.CONN_PARA_KEY_PROVIDE_GOOGLE_CREDENTIALS));
+        } else if (EHDFSRepositoryToComponent.GOOGLE_AUTH_MODE.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE));
         } else if (EHDFSRepositoryToComponent.PATH_TO_GOOGLE_CREDENTIALS.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
