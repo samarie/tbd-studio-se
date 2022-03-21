@@ -192,7 +192,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         break;
                     case GoogleOauthToken:
                     	ConnectionContextHelper.createParameters(varList, paramName,
-                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
+                              conn.getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS), JavaTypesManager.PASSWORD );
                         break;
                     case DataBricksEndpoint:
                         ConnectionContextHelper.createParameters(varList, paramName,

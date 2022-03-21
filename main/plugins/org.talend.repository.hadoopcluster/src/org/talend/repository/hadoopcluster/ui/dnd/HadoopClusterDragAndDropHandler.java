@@ -228,7 +228,7 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
         } else if (EHDFSRepositoryToComponent.OAUTH_ACCESS_TOKEN.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
-                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
+            		EncryptionUtil.getValue(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS), false));
         } else if (EHDFSRepositoryToComponent.DATABRICKS_ENDPOINT.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT));
