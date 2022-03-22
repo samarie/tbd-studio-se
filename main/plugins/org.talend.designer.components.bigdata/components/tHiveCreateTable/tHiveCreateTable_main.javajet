@@ -94,7 +94,7 @@ imports="
             }
 <%
         }
-    } else if (hiveDistrib.isGoogleDataprocDistribution()) {
+    } else if (hiveDistrib.doSupportUniversalDataprocMode()) {
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetDataprocConnection.javajet"%>
 <%
