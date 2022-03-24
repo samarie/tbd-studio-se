@@ -698,14 +698,9 @@
 				MVN="mvn:org.talend.libraries/snappy-java-1.0.5/6.0.0"				
 				REQUIRED_IF="((DISTRIB[DISTRIBUTION, HIVE_VERSION].doSupportOldImportMode[] AND isShow[PARQUET_COMPRESSION]) AND (USE_EXISTING_CONNECTION=='false') AND (PARQUET_COMPRESSION=='SNAPPY') AND (DISTRIBUTION!='CUSTOM'))" />
 			
-			<!-- DATAPROC DEPENDENCIES -->
-			<IMPORT NAME="talend-bigdata-launcher-dataproc-2.4.6.jar" MODULE="talend-bigdata-launcher-dataproc-2.4.6.jar"
-				MVN="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-dataproc/2.4.6"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION=='false' AND DISTRIB[DISTRIBUTION, HIVE_VERSION].doSupportUniversalDataprocMode[] AND DISTRIBUTION!='CUSTOM')" />
-			
-			<IMPORT NAME="talend-bigdata-launcher-core-2.4.6.jar" MODULE="talend-bigdata-launcher-core-2.4.6.jar"
-				MVN="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.4.6"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION=='false' AND DISTRIB[DISTRIBUTION, HIVE_VERSION].doSupportUniversalDataprocMode[] AND DISTRIBUTION!='CUSTOM')" />
+			<!-- Dataproc 2.x -->	
+			<IMPORT MODULE_GROUP="DATAPROC-LAUNCHER" 
+                    REQUIRED_IF="(DISTRIB[DISTRIBUTION, HIVE_VERSION].doSupportUniversalDataprocMode[] AND DISTRIBUTION!='CUSTOM') AND USE_EXISTING_CONNECTION=='false'" REQUIRED="true"/>
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
