@@ -4,6 +4,7 @@
    <extension
          point="org.talend.core.runtime.librariesNeeded">
 
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="antlr4-4.8.jar" name="antlr4-4.8.jar" mvn_uri="mvn:org.antlr/antlr4/4.8"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="antlr4-runtime-4.8.jar" name="antlr4-runtime-4.8.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.8"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aircompressor-0.21.jar" name="aircompressor-0.21.jar" mvn_uri="mvn:io.airlift/aircompressor/0.21"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="avro-1.10.2.jar" name="avro-1.10.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.10.2"/>
@@ -242,6 +243,7 @@
        
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_2_x" name="SPARK-COMPILE-GROUP-SPARK_3_2_x">
+            <library id="antlr4-4.8.jar"/>
             <library id="antlr4-runtime-4.8.jar"/>
             <library id="avro-1.10.2.jar"/>
             <library id="avro-mapred-1.10.2.jar"/>
