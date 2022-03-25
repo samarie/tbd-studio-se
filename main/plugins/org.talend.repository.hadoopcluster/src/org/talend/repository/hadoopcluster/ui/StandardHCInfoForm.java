@@ -2358,7 +2358,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addContextParams(EHadoopParamName.GoogleClusterId, isUse);
         addContextParams(EHadoopParamName.GoogleRegion, isUse);
         addContextParams(EHadoopParamName.GoogleJarsBucket, isUse);
-        addContextParams(EHadoopParamName.GoogleAuthMode, isUse);
         addContextParams(EHadoopParamName.PathToGoogleCredentials, isUse);
         addContextParams(EHadoopParamName.GoogleOauthToken, isUse);
     }
