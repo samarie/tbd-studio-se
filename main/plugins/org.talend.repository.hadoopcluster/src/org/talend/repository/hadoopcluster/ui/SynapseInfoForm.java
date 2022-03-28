@@ -57,6 +57,8 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
 
     private LabelledText azureContainerText;
 
+    private LabelledCombo storageAuthTypeCombo;
+    
     private LabelledText azureUsernameText;
 
     private LabelledText azurePasswordText;
@@ -144,6 +146,18 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             }
         } else {
             storageCombo.select(0);
+        }
+        
+        String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE));
+        if (authModeValue != null) {
+        	ESynapseAuthType type = ESynapseAuthType.getDataprocAuthTypeByName(authModeValue, false);
+            if (type != null) {
+            	storageAuthTypeCombo.setText(type.getDisplayName());
+            } else {
+            	storageAuthTypeCombo.select(0);
+            }
+        } else {
+        	storageAuthTypeCombo.select(0);
         }
         
         String synapseFSHostname = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME));
