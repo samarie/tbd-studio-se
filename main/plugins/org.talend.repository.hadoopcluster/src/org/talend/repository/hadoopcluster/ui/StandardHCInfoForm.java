@@ -366,14 +366,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
             String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
             if (providerValue != null) {
-                cloudProviderCombo.setText(getDatabriksCloudProviderByValue(providerValue).getProviderLableName());
+                cloudProviderCombo.setText(getDatabricksCloudProviderByValue(providerValue).getProviderLableName());
             } else {
 
                 cloudProviderCombo.setText(EDatabriksCloudProvider.AWS.getProviderLableName());
             }
             String runModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE);
             if (runModeValue != null) {
-                runSubmitCombo.setText(getDatabriksRunModeByValue(runModeValue).getRunModeLabel());
+                runSubmitCombo.setText(getDatabricksRunModeByValue(runModeValue).getRunModeLabel());
             } else {
                 runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
             }
@@ -1433,7 +1433,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             public void widgetSelected(SelectionEvent e) {
                 String providerLableName = cloudProviderCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER,
-                        getDatabriksCloudProviderByName(providerLableName).getProviderValue());
+                        getDatabricksCloudProviderByName(providerLableName).getProviderValue());
                 checkFieldsValue();
             }
         });
@@ -1443,7 +1443,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             public void widgetSelected(SelectionEvent e) {
                 String runModeLableName = runSubmitCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE,
-                        getDatabriksRunModeByName(runModeLableName).getRunModeValue());
+                        getDatabricksRunModeByName(runModeLableName).getRunModeValue());
                 checkFieldsValue();
             }
         });
@@ -2302,7 +2302,7 @@ jtOrRmPrincipalText
         return ESparkMode.YARN_CLUSTER;
     }
 
-    private EDatabriksCloudProvider getDatabriksCloudProviderByVaule(String providerValue) {
+    private EDatabriksCloudProvider getDatabricksCloudProviderByValue(String providerValue) {
         if (sparkDistribution != null) {
             List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
             for (EDatabriksCloudProvider provider : supportCloudProviders) {
@@ -2314,7 +2314,7 @@ jtOrRmPrincipalText
         return EDatabriksCloudProvider.AWS;
     }
 
-    private EDatabriksSubmitMode getDatabriksRunModeByValue(String runModeValue) {
+    private EDatabriksSubmitMode getDatabricksRunModeByValue(String runModeValue) {
         if (sparkDistribution != null) {
             List<EDatabriksSubmitMode> runModes = sparkDistribution.getRunSubmitMode();
             for (EDatabriksSubmitMode runMode : runModes) {
@@ -2326,7 +2326,7 @@ jtOrRmPrincipalText
         return EDatabriksSubmitMode.CREATE_RUN_JOB;
     }
 
-    private EDatabriksCloudProvider getDatabriksCloudProviderByName(String providerLableName) {
+    private EDatabriksCloudProvider getDatabricksCloudProviderByName(String providerLableName) {
         if (sparkDistribution != null) {
             List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
             for (EDatabriksCloudProvider provider : supportCloudProviders) {
@@ -2338,7 +2338,7 @@ jtOrRmPrincipalText
         return EDatabriksCloudProvider.AWS;
     }
 
-    private EDatabriksSubmitMode getDatabriksRunModeByName(String runModeLableName) {
+    private EDatabriksSubmitMode getDatabricksRunModeByName(String runModeLableName) {
         if (sparkDistribution != null) {
             List<EDatabriksSubmitMode> supportRunModes = sparkDistribution.getRunSubmitMode();
             for (EDatabriksSubmitMode provider : supportRunModes) {
