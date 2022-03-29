@@ -943,6 +943,11 @@ public class HCRepositoryUtil {
         if (synapseFsContainer != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER, synapseFsContainer);
         }
+        String synapseAuthMode = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.ADLSGEN2AUTH.getName());
+        if (synapseAuthMode != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE, synapseAuthMode);
+        }
         String synapseFsUsername =  hiveVersion.getDefaultConfig(distribution,
         		EHadoopProperties.SYNAPSE_STORAGE_USERNAME.getName());
         if (synapseFsUsername != null) {
