@@ -38,6 +38,7 @@ import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopClusterInfoForm;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.core.hadoop.version.ESynapseAuthType;
 
 public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterConnection> {
 
@@ -166,20 +167,27 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         String synapseFSContainer = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER));
         azureContainerText.setText(synapseFSContainer);
         
+        String credentialName = storageAuthTypeCombo.getText();
+        
         String synapseFSUsername = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME));
         azureUsernameText.setText(synapseFSUsername);
-        
-        String azureClientId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_ID));
-        azurePasswordText.setText(azureClientId);
-        
-        String azureDirectoryId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID));
-        azurePasswordText.setText(azureDirectoryId);
-        
-        String azureClientKey = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY));
-        azurePasswordText.setText(azureClientKey);
+        azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
         
         String azurePassword = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD));
         azurePasswordText.setText(azurePassword);
+        azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
+        
+        String azureClientId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_ID));
+        azureClientIdText.setText(azureClientId);
+        azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+        
+        String azureDirectoryId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID));
+        azureDirectoryIdText.setText(azureDirectoryId);
+        azureDirectoryIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+        
+        String azureClientKey = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY));
+        azureClientKeyText.setText(azureClientKey);
+        azureClientKeyText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
         
         String azureDeployBlob = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
         azureDeployBlobText.setText(azureDeployBlob);
@@ -288,6 +296,10 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
 
         azureHostnameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
         azureUsernameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
+        
+        storageAuthTypeCombo = new LabelledCombo(dataProcGroup, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		ESynapseAuthType.getAllSynapseAuthTypes());
+        
         azureContainerText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
         
         azurePasswordText = new LabelledText(azurePartComposite,
@@ -369,6 +381,23 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters()
                         .put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER, azureContainerText.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        storageAuthTypeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String credentialName = storageAuthTypeCombo.getText();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE,
+                    	ESynapseAuthType.getSynapseAuthTypeByDisplayName(credentialName).getName());
+                
+                azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
+                azurePasswordText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
+                
+                azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+                azureDirectoryIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+                azureClientKeyText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
                 checkFieldsValue();
             }
         });
