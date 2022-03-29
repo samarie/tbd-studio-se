@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -55,6 +56,7 @@ import org.talend.commons.ui.swt.formtools.LabelledCheckbox;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
+import org.talend.commons.ui.swt.formtools.LabelledWidget;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
@@ -258,6 +260,16 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText tokenText;
 
     private LabelledText dbfsDepFolderText;
+    
+    // CDE widgets
+    private LabelledWidget cdeApiEndPoint;
+    private LabelledWidget cdeAutoGenerateToken;
+    private LabelledWidget cdeToken;
+    private LabelledWidget cdeTokenEndpoint;
+    private LabelledWidget cdeWorkloadUser;
+    private LabelledWidget cdeWorkloadPassword;
+    // Mapping between connection parameter and form field 
+    private Map<String, LabelledWidget> fieldByParamKey;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -393,6 +405,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String folder = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
             dbfsDepFolderText.setText(folder);
+            
+            // CDE - Set widget values from connection
+            for (Entry<String, LabelledWidget> entry : fieldByParamKey.entrySet())
+            {
+                String value = StringUtils.trimToEmpty(getConnection().getParameters().get(entry.getKey()));
+                entry.getValue().set(value);
+            }
+            updateCdeFieldsVisibility();
         }
     }
 
@@ -518,8 +538,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     @Override
     protected void addFields() {
-        String distro = ((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution();
-        System.out.println(distro);
         if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) { //$NON-NLS-1$
             Group configGroup = Form.createGroup(this, 2, Messages.getString("HadoopClusterForm.sparkConfig"), 120); //$NON-NLS-1$
             configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -633,24 +651,22 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private void addCdeFields() {
         cdeGroup = Form.createGroup(bigComposite, 2, Messages.getString("CdeInfoForm.text.configuration"), 110); //$NON-NLS-1$
         cdeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        LabelledText cdeApiEndPoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeApiEndPoint"));  //$NON-NLS-1$
-        LabelledText cdeToken = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeToken"), 1, SWT.PASSWORD);  //$NON-NLS-1$
-        LabelledCheckbox cdeAutoGenerateToken = new LabelledCheckbox(cdeGroup, Messages.getString("CdeInfoForm.checkbox.cdeAutoGenerateToken")); //$NON-NLS-1$
-        LabelledText cdeTokenEndpoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeTokenEndpoint"));  //$NON-NLS-1$
-        LabelledText cdeWorkloadUser = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadUser"));  //$NON-NLS-1$
-        LabelledText cdeWorkloadPassword = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadPassword"), 1, SWT.PASSWORD);  //$NON-NLS-1$
-        /*
-                <PARAMETER NAME="CDE_API_ENDPOINT" FIELD="TEXT" NUM_ROW="100" GROUP="CDE_CONF" SHOW_IF="SPARK_MODE=='CDE'"/>
-                <PARAMETER NAME="CDE_TOKEN" FIELD="PASSWORD" NUM_ROW="101" GROUP="CDE_CONF" SHOW_IF="(isShow[CDE_AUTO_GENERATE_TOKEN] AND CDE_AUTO_GENERATE_TOKEN=='false')"/>
-                <PARAMETER NAME="CDE_AUTO_GENERATE_TOKEN" FIELD="CHECK" NUM_ROW="102" GROUP="CDE_CONF" SHOW_IF="SPARK_MODE=='CDE'"/>
-                <PARAMETER NAME="CDE_TOKEN_ENDPOINT" FIELD="TEXT" NUM_ROW="103" GROUP="CDE_CONF" SHOW_IF="(isShow[CDE_AUTO_GENERATE_TOKEN] AND CDE_AUTO_GENERATE_TOKEN=='true')">
-                    <DEFAULT>"[BASE_URL]/gateway/authtkn"</DEFAULT>
-                </PARAMETER>
-                <PARAMETER NAME="CDE_WORKLOAD_USER" FIELD="TEXT" NUM_ROW="104" GROUP="CDE_CONF" SHOW_IF="(isShow[CDE_AUTO_GENERATE_TOKEN] AND CDE_AUTO_GENERATE_TOKEN=='true')"/>
-                <PARAMETER NAME="CDE_WORKLOAD_PASSWORD" FIELD="PASSWORD" NUM_ROW="105" GROUP="CDE_CONF" SHOW_IF="(isShow[CDE_AUTO_GENERATE_TOKEN] AND CDE_AUTO_GENERATE_TOKEN=='true')"/>
-          */
+        cdeApiEndPoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeApiEndPoint"));  //$NON-NLS-1$
+        cdeAutoGenerateToken = new LabelledCheckbox(cdeGroup, Messages.getString("CdeInfoForm.checkbox.cdeAutoGenerateToken")); //$NON-NLS-1$
+        cdeToken = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeToken"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);  //$NON-NLS-1$
+        cdeTokenEndpoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeTokenEndpoint"));  //$NON-NLS-1$
+        cdeWorkloadUser = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadUser"));  //$NON-NLS-1$
+        cdeWorkloadPassword = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadPassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);  //$NON-NLS-1$
+
+        fieldByParamKey = new HashMap<String, LabelledWidget>();
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT, cdeApiEndPoint);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN, cdeToken);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_AUTO_GENERATE_TOKEN, cdeAutoGenerateToken);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT, cdeTokenEndpoint);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER, cdeWorkloadUser);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD, cdeWorkloadPassword);
     }
-    
+
     private List<String> getRunSubmitModes() {
         List<String> runSubmitLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
@@ -1484,6 +1500,44 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+        
+        // CDE listeners (UI to Connection)
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN);
+        ((LabelledCheckbox) cdeAutoGenerateToken).addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateCdeFieldsVisibility();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_AUTO_GENERATE_TOKEN, Boolean.valueOf(((LabelledCheckbox) cdeAutoGenerateToken).getSelection()).toString());
+            }
+        });
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD);
+    }
+
+    /*
+     * Show/hide required CDE fields according token generation mechanism
+     */
+    private void updateCdeFieldsVisibility() {
+        cdeToken.setVisible(! ((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
+        cdeTokenEndpoint.setVisible(((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
+        cdeWorkloadUser.setVisible(((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
+        cdeWorkloadPassword.setVisible(((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
+    }
+    
+    /*
+     * Add a listener to update paramKey connection parameter with value from associated widget
+     */
+    private void addBasicListener(String paramKey) {
+        LabelledText targetComponent = (LabelledText) fieldByParamKey.get(paramKey);
+        targetComponent.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(paramKey, targetComponent.getText());
+                checkFieldsValue();
+            }
+        });
     }
 
     /**
@@ -1496,46 +1550,22 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
                     getSparkModeByName(sparkModeLabelName).getValue());
 
+            // List of possible configuration groups
             List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup);
 
+            // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
             visibleGroupsBySparkMode.put(ESparkMode.YARN_CLUSTER, Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp));
             visibleGroupsBySparkMode.put(ESparkMode.DATABRICKS, Arrays.asList(dataBricksGroup));
             visibleGroupsBySparkMode.put(ESparkMode.CDE, Arrays.asList(cdeGroup));
 
+            // Compute current visible groups
             ESparkMode currentSparkMode = ESparkMode.getByLabel(sparkModeLabelName);
-            List<Group> visibleGroups = visibleGroupsBySparkMode.get(currentSparkMode);
+            List<Group> currentVisibleGroups = visibleGroupsBySparkMode.get(currentSparkMode);
+            // Hide required groups
             for (Group group : groups) {
-                hideControl(group, visibleGroups == null || !visibleGroups.contains(group));
+                hideControl(group, currentVisibleGroups == null || !currentVisibleGroups.contains(group));
             }
-/*
-            if (ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeLabelName)) {
-                hideControl(connectionGroup, false);
-                hideControl(authGroup, false);
-                hideControl(webHDFSSSLEncryptionGrp, false);
-                hideControl(dataBricksGroup, true);
-            } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLabelName)) {
-                hideControl(connectionGroup, true);
-                hideControl(authGroup, true);
-                hideControl(webHDFSSSLEncryptionGrp, true);
-                hideControl(dataBricksGroup, false);
-            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLabelName)) {
-                hideControl(connectionGroup, true);
-                hideControl(authGroup, true);
-                hideControl(webHDFSSSLEncryptionGrp, true);
-                hideControl(dataBricksGroup, true);
-            } else if (ESparkMode.SPARK_LOCAL.getLabel().equals(sparkModeLabelName)) {
-                hideControl(connectionGroup, true);
-                hideControl(authGroup, true);
-                hideControl(webHDFSSSLEncryptionGrp, true);
-                hideControl(dataBricksGroup, true);
-            } else {
-                hideControl(connectionGroup, true);
-                hideControl(authGroup, true);
-                hideControl(webHDFSSSLEncryptionGrp, true);
-                hideControl(dataBricksGroup, true);
-            }
-*/
         } else {
             hideControl(dataBricksGroup, true);
             hideControl(cdeGroup, true);
@@ -2175,12 +2205,12 @@ jtOrRmPrincipalText
         if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
             collectYarnConParameters();
         } else {
-            String sparkModeLableName = sparkModeCombo.getText();
-            if (ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeLableName)) {
+            String sparkModeLabelName = sparkModeCombo.getText();
+            if (ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeLabelName)) {
                 collectYarnConParameters();
-            } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLableName)) {
+            } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLabelName)) {
                 collectDBRParameters();
-            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
+            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLabelName)) {
                 // TODO
             }
         }
