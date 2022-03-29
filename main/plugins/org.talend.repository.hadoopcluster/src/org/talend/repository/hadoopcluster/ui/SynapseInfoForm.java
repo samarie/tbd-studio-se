@@ -151,7 +151,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE));
         if (authModeValue != null) {
-        	ESynapseAuthType type = ESynapseAuthType.getDataprocAuthTypeByName(authModeValue, false);
+        	ESynapseAuthType type = ESynapseAuthType.getSynapseAuthTypeByName(authModeValue, false);
             if (type != null) {
             	storageAuthTypeCombo.setText(type.getDisplayName());
             } else {
@@ -297,7 +297,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azureHostnameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
         azureUsernameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
         
-        storageAuthTypeCombo = new LabelledCombo(dataProcGroup, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
+        storageAuthTypeCombo = new LabelledCombo(azurePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
         		ESynapseAuthType.getAllSynapseAuthTypes());
         
         azureContainerText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
