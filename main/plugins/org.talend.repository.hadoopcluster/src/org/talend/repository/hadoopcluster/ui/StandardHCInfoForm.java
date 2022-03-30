@@ -2212,8 +2212,18 @@ jtOrRmPrincipalText
                 collectDBRParameters();
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLabelName)) {
                 // TODO
+            } else if (ESparkMode.CDE.getLabel().equals(sparkModeLabelName)) {
+                collectCDEParameters();
             }
         }
+    }
+
+    private void collectCDEParameters() {
+        addContextParams(EHadoopParamName.CdeApiEndPoint, true);
+        addContextParams(EHadoopParamName.CdeToken, true);
+        addContextParams(EHadoopParamName.CdeTokenEndpoint, true);
+        addContextParams(EHadoopParamName.CdeWorkloadUser, true);
+        addContextParams(EHadoopParamName.CdeWorkloadPassword, true);
     }
 
     protected void collectDBRParameters() {
