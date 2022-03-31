@@ -1520,12 +1520,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
      * Show/hide required CDE fields according token generation mechanism
      */
     private void updateCdeFieldsVisibility() {
-        cdeToken.setVisible(! ((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
-        cdeTokenEndpoint.setVisible(((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
-        cdeWorkloadUser.setVisible(((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
-        cdeWorkloadPassword.setVisible(((LabelledCheckbox) cdeAutoGenerateToken).getSelection());
+        boolean autoGenerateToken = ((LabelledCheckbox) cdeAutoGenerateToken).getSelection();
+        cdeToken.setVisible(! autoGenerateToken, autoGenerateToken);
+        cdeTokenEndpoint.setVisible(autoGenerateToken, ! autoGenerateToken);
+        cdeWorkloadUser.setVisible(autoGenerateToken, ! autoGenerateToken);
+        cdeWorkloadPassword.setVisible(autoGenerateToken, ! autoGenerateToken);
+        cdeGroup.layout();
+        cdeGroup.getParent().layout();
     }
-    
+
     /*
      * Add a listener to update paramKey connection parameter with value from associated widget
      */
