@@ -37,6 +37,8 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-3.2.0.jar" name="hadoop-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-hdfs-client-3.2.0.jar" name="hadoop-hdfs-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-mapreduce-client-core-3.2.0.jar" name="hadoop-mapreduce-client-core-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.2.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-mapreduce-client-jobclient-3.2.0.jar" name="hadoop-mapreduce-client-jobclient-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-jobclient/3.2.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-mapreduce-client-common-3.2.0.jar" name="hadoop-mapreduce-client-common-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-common/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-api-3.2.0.jar" name="hadoop-yarn-api-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-api/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-client-3.2.0.jar" name="hadoop-yarn-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-client/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-common-3.2.0.jar" name="hadoop-yarn-common-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.2.0"/>
@@ -95,6 +97,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jersey-server-2.30.jar" name="jersey-server-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/2.30"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="json4s-ast_2.12-3.7.0-M11.jar" name="json4s-ast_2.12-3.7.0-M11.jar" mvn_uri="mvn:org.json4s/json4s-ast_2.12/3.7.0-M11/jar"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="json4s-core_2.12-3.7.0-M11.jar" name="json4s-core_2.12-3.7.0-M11.jar" mvn_uri="mvn:org.json4s/json4s-core_2.12/3.7.0-M11"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="json4s-jackson_2.12-3.7.0-M11.jar" name="json4s-jackson_2.12-3.7.0-M11.jar" mvn_uri="mvn:org.json4s/json4s-jackson_2.12/3.7.0-M11"/>
@@ -268,6 +271,8 @@
             <library id="hadoop-common-3.2.0.jar"/>
             <library id="hadoop-hdfs-client-3.2.0.jar"/>
             <library id="hadoop-mapreduce-client-core-3.2.0.jar"/>
+            <library id="hadoop-mapreduce-client-jobclient-3.2.0.jar"/>
+            <library id="hadoop-mapreduce-client-common-3.2.0.jar"/>
             <library id="hadoop-yarn-api-3.2.0.jar"/>
             <library id="hadoop-yarn-client-3.2.0.jar"/>
             <library id="hadoop-yarn-common-3.2.0.jar"/>
@@ -295,6 +300,7 @@
             <library id="jersey-container-servlet-core-2.30.jar"/>
             <library id="jersey-server-2.30.jar"/>
             <library id="jodd-core-3.5.2.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
             <library id="json4s-ast_2.12-3.7.0-M11.jar"/>
             <library id="json4s-core_2.12-3.7.0-M11.jar"/>
             <library id="json4s-jackson_2.12-3.7.0-M11.jar"/>
