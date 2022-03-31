@@ -288,6 +288,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     }
     
     @Override
+    public boolean doSupportEmbeddedMode() {
+        return false;
+    }
+    
+    @Override
     public boolean doSupportHive1() {
         return false;
     }
