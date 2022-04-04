@@ -103,16 +103,16 @@ public final class DistributionHelper {
             }
             if (method == null) { // can't find in current base class, try parent class or interfaces.
                 //we look for the classes first as this is where the behavior can be overridden.
-                if (baseClazz.getSuperclass()!=null) {
+                if (baseClazz.getSuperclass() != null) {
                     method = findMethod(baseClazz.getSuperclass(), methodName);
                 }
-                if (method == null) {
-                	 if (baseClazz.getSuperclass().getSuperclass()!=null) {
+                if (method == null && baseClazz.getSuperclass() != null) {
+                	 if (baseClazz.getSuperclass().getSuperclass() != null) {
                          method = findMethod(baseClazz.getSuperclass().getSuperclass(), methodName);
                      }
                 }
                 //then we look for default behavior in interfaces.
-                if (method==null) {
+                if (method == null) {
                     method = findDefaultMethod(baseClazz,methodName);
                 }
             }
