@@ -107,15 +107,6 @@ imports="
 <%
 			}
 
-			if(("STANDALONE".equals(connectionMode) && !hiveDistrib.doSupportStandaloneMode()) || ("EMBEDDED".equals(connectionMode) && !hiveDistrib.doSupportEmbeddedMode())) {
-%>
-				if(true) {
-					//throw new java.lang.Exception("The distribution <%=hiveDistrib.getVersion()%> does not support this connection mode . Please check your component configuration.");
-					throw new java.lang.Exception("distribution: <%=hiveDistrib.getVersion()%>, supportEmbedded ?: <%=hiveDistrib.doSupportEmbeddedMode()%>, connection Mode: <%=connectionMode%>, supportStandAlone: <%=hiveDistrib.doSupportStandaloneMode()%>");
-				}
-<%
-			}
-
 			if("STANDALONE".equals(connectionMode) && "hive".equals(this.hiveServer) && !hiveDistrib.doSupportHive1Standalone()) {
 %>
 				if(true) {
