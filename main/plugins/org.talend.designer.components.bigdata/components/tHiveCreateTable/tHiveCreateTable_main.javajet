@@ -121,7 +121,7 @@ imports="
     String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
     INode connectionInformationNode = node;
 
-    if(useExistingConnection && !hiveDistrib.useCloudLauncher()) {
+     if(useExistingConnection && !hiveDistrib.useCloudLauncher() && !hiveDistrib.doSupportUniversalDataprocMode()) {
         connectionMode = "";
         setFsDefaultName = false;
         fsDefaultName = "";
