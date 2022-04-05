@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,9 +17,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
@@ -41,6 +44,21 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
     private LabelledText knoxUserText;
     private LabelledText knoxPasswordText;
     private LabelledText knoxDirectoryText;
+    
+    private Group authGroup;
+    private Composite authPartComposite;
+    private Composite authCommonComposite;
+    private Button kerberosBtn;
+    private Composite authNodejtOrRmHistoryComposite;
+    private LabelledText namenodePrincipalText;
+    private LabelledText jtOrRmPrincipalText;
+    private LabelledText jobHistoryPrincipalText;
+    private LabelledText keytabPrincipalText;
+    private Composite authKeytabComposite;
+    private Button keytabBtn;
+    private LabelledFileField keytabText;
+    
+    private ScrolledComposite scrolledComposite;
 
     private UtilsButton checkServicesBtn;
     
@@ -71,6 +89,66 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         knoxPasswordText.getTextControl().setEchoChar('*');
 
         knoxDirectoryText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxDirectory"), 1); //$NON-NLS-1$
+    }
+    
+    
+    
+    private void addAuthenticationFields() {
+        authGroup = Form.createGroup(this, 1, Messages.getString("HadoopClusterForm.authenticationSettings"), 110); //$NON-NLS-1$
+        authGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        authPartComposite = new Composite(authGroup, SWT.NULL);
+        GridLayout authPartLayout = new GridLayout(1, false);
+        authPartLayout.marginWidth = 0;
+        authPartLayout.marginHeight = 0;
+        authPartComposite.setLayout(authPartLayout);
+        authPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        authCommonComposite = new Composite(authPartComposite, SWT.NULL);
+        GridLayout authCommonCompLayout = new GridLayout(1, false);
+        authCommonCompLayout.marginWidth = 0;
+        authCommonCompLayout.marginHeight = 0;
+        authCommonComposite.setLayout(authCommonCompLayout);
+        authCommonComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        kerberosBtn = new Button(authCommonComposite, SWT.CHECK);
+        kerberosBtn.setText(Messages.getString("HadoopClusterForm.button.kerberos")); //$NON-NLS-1$
+        kerberosBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
+
+        authNodejtOrRmHistoryComposite = new Composite(authCommonComposite, SWT.NULL);
+        GridLayout authNodejtOrRmHistoryCompLayout = new GridLayout(4, false);
+        authNodejtOrRmHistoryCompLayout.marginWidth = 0;
+        authNodejtOrRmHistoryCompLayout.marginHeight = 0;
+        authNodejtOrRmHistoryComposite.setLayout(authNodejtOrRmHistoryCompLayout);
+        authNodejtOrRmHistoryComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        namenodePrincipalText = new LabelledText(authNodejtOrRmHistoryComposite,
+                Messages.getString("HadoopClusterForm.text.namenodePrincipal"), 1); //$NON-NLS-1$
+        jtOrRmPrincipalText = new LabelledText(authNodejtOrRmHistoryComposite,
+                Messages.getString("HadoopClusterForm.text.rmPrincipal"), 1); //$NON-NLS-1$
+        jobHistoryPrincipalText = new LabelledText(authNodejtOrRmHistoryComposite,
+                Messages.getString("HadoopClusterForm.text.jobHistoryPrincipal"), 1); //$NON-NLS-1$
+
+        authKeytabComposite = new Composite(authPartComposite, SWT.NULL);
+        GridLayout authKeytabCompLayout = new GridLayout(5, false);
+        authKeytabCompLayout.marginWidth = 0;
+        authKeytabCompLayout.marginHeight = 0;
+        authKeytabComposite.setLayout(authKeytabCompLayout);
+        authKeytabComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        keytabBtn = new Button(authKeytabComposite, SWT.CHECK);
+        keytabBtn.setText(Messages.getString("HadoopClusterForm.button.keytab")); //$NON-NLS-1$
+        keytabBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 5, 1));
+        keytabPrincipalText = new LabelledText(authKeytabComposite,
+                Messages.getString("HadoopClusterForm.text.keytabPrincipal"), 1); //$NON-NLS-1$
+        String[] extensions = { "*.*" }; //$NON-NLS-1$
+        keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
+    }
+    
+    private void hideKerberosControl(boolean hide) {
+        hideControl(authNodejtOrRmHistoryComposite, hide);
+        hideControl(authKeytabComposite, hide);
+        authCommonComposite.layout();
+        authCommonComposite.getParent().layout();
     }
     
     private void addCheckFields() {
@@ -192,10 +270,91 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
                 checkFieldsValue();
             }
         });
+        namenodePrincipalText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setPrincipal(namenodePrincipalText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        jtOrRmPrincipalText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setJtOrRmPrincipal(jtOrRmPrincipalText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        jobHistoryPrincipalText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                getConnection().setJobHistoryPrincipal(jobHistoryPrincipalText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        kerberosBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                hideControl(authNodejtOrRmHistoryComposite, !kerberosBtn.getSelection());
+                hideControl(authKeytabComposite, !kerberosBtn.getSelection());
+                getConnection().setEnableKerberos(kerberosBtn.getSelection());
+                updateForm();
+                authGroup.layout();
+                authGroup.getParent().layout();
+                checkFieldsValue();
+            }
+        });
+
+        keytabBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setUseKeytab(keytabBtn.getSelection());
+                updateForm();
+                checkFieldsValue();
+            }
+        });
+
+        keytabPrincipalText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setKeytabPrincipal(keytabPrincipalText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        keytabText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setKeytab(keytabText.getText());
+                checkFieldsValue();
+            }
+        });
     }
 
     @Override
     public void updateForm() {
+        kerberosBtn.setEnabled(true);
+        namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
+        jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
+        jobHistoryPrincipalText.setEditable(getConnection().isEnableKerberos());
+        keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
+        keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+        keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+        keytabPrincipalText
+                .setHideWidgets(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection() && keytabBtn.isEnabled() && keytabBtn
+                        .getSelection()));
+        keytabText.setVisible(kerberosBtn.isEnabled() && kerberosBtn.getSelection() && keytabBtn.isEnabled()
+                && keytabBtn.getSelection());
+        hideKerberosControl(!kerberosBtn.getSelection());
         adaptFormToEditable();
 
         if (isContextMode()) {
@@ -242,8 +401,14 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
 
     @Override
     protected void addFields() {
+    	scrolledComposite = new ScrolledComposite(this, SWT.V_SCROLL | SWT.H_SCROLL);
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+
         addConfigurationFields();
         addCheckFields();
+        addAuthenticationFields();
     }
     
     private void fillDefaults() {
