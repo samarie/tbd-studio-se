@@ -473,38 +473,39 @@
         <!-- Azure Active directory libs -->
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="msal4j.jar" name="msal4j-1.11.0.jar" 
-          mvn_url="mvn:com.microsoft.azure/msal4j/1.11.0"/>
+          mvn_uri="mvn:com.microsoft.azure/msal4j/1.11.0"/>
         	
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="oauth2-oidc-sdk-9.7.jar" name="oauth2-oidc-sdk-9.7.jar" 
-          mvn_url="mvn:com.nimbusds/oauth2-oidc-sdk/9.7"/>
+          mvn_uri="mvn:com.nimbusds/oauth2-oidc-sdk/9.7"/>
         	
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="jcip-annotations-1.0-1.jar" name="jcip-annotations-1.0-1.jar" 
-          mvn_url="mvn:com.github.stephenc.jcip/jcip-annotations/1.0-1"/>
+          mvn_uri="mvn:com.github.stephenc.jcip/jcip-annotations/1.0-1"/>
         	
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
-          id="json-smart-2.4.7.jar" MODULE="json-smart-2.4.7.jar" 
-          mvn_url="mvn:net.minidev/json-smart/2.4.7" />
+          id="json-smart-2.4.7.jar" name="json-smart-2.4.7.jar" 
+          mvn_uri="mvn:net.minidev/json-smart/2.4.7" />
         	
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" id="accessors-smart-2.4.7.jar" 
           name="accessors-smart-2.4.7.jar" 
-          mvn_url="mvn:net.minidev/accessors-smart/2.4.7" />
+          mvn_uri="mvn:net.minidev/accessors-smart/2.4.7" />
         	
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="asm-9.1.jar" name="asm-9.1.jar" 
-          mvn_url="mvn:org.ow2.asm/asm/9.1"/>
+          mvn_uri="mvn:org.ow2.asm/asm/9.1"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="content-type-2.1.jar" name="content-type-2.1.jar" 
-          mvn_url="mvn:com.nimbusds/content-type/2.1" />
+          mvn_uri="mvn:com.nimbusds/content-type/2.1" />
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
-          id="lang-tag-1.5.jar" name="lang-tag-1.5.jar" mvn_url="mvn:com.nimbusds/lang-tag/1.5"/>
+          id="lang-tag-1.5.jar" name="lang-tag-1.5.jar" 
+          mvn_uri="mvn:com.nimbusds/lang-tag/1.5"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="nimbus-jose-jwt-9.9.3.jar" name="nimbus-jose-jwt-9.9.3.jar" 
-          mvn_url="mvn:com.nimbusds/nimbus-jose-jwt/9.9.3" />
+          mvn_uri="mvn:com.nimbusds/nimbus-jose-jwt/9.9.3" />
         
         <!-- Bigdata launcher group -->
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"

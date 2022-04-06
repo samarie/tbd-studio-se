@@ -296,10 +296,10 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
 
         azureHostnameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
         
-        azureContainerText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
-        
         storageAuthTypeCombo = new LabelledCombo(azurePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
         		ESynapseAuthType.getAllSynapseAuthTypes());
+        
+        azureContainerText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
         
         azureUsernameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
         
