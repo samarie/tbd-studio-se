@@ -177,7 +177,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azurePasswordText.setText(azurePassword);
         azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
         
-        String azureClientId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_ID));
+        String azureClientId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID));
         azureClientIdText.setText(azureClientId);
         azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
         

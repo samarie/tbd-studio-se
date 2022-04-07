@@ -279,7 +279,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         break;
                     case SynapseClientId:
                         ConnectionContextHelper.createParameters(varList, paramName,
-                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_ID));
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID));
                         break;  
                     case SynapseDirectoryId:
                         ConnectionContextHelper.createParameters(varList, paramName,
@@ -531,7 +531,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         case SynapseClientId:
-        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_ID,
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         case SynapseDirectoryId:

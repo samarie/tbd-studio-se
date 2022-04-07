@@ -959,9 +959,9 @@ public class HCRepositoryUtil {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD, synapseFsPassword);
         }
         String synapseclientId =  hiveVersion.getDefaultConfig(distribution,
-        		EHadoopProperties.SYNAPSE_CLIENT_ID.getName());
+        		EHadoopProperties.SYNAPSE_APPLICATION_ID.getName());
         if (synapseclientId != null) {
-        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_ID, synapseclientId);
+        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID, synapseclientId);
         }
         String synapsedirectoryId =  hiveVersion.getDefaultConfig(distribution,
         		EHadoopProperties.SYNAPSE_DIRECTORY_ID.getName());
