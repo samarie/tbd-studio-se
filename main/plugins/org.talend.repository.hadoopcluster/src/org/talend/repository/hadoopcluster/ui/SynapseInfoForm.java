@@ -273,8 +273,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     }
 
     private void addFSFields() {
-       // Group azureGroup = Form.createGroup(this, 1, Messages.getString("SynapseInfoForm.azureSettings"), 110); //$NON-NLS-1$
-    	 Group azureGroup = Form.createGroup(this, 2, Messages.getString("SynapseInfoForm.azureSettings"), 110); //$NON-NLS-1$
+        Group azureGroup = Form.createGroup(this, 2, Messages.getString("SynapseInfoForm.azureSettings"), 110); //$NON-NLS-1$
         azureGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         storagePartComposite = new Composite(azureGroup, SWT.NULL);
@@ -287,37 +286,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         storageCombo = new LabelledCombo(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.storage"),
                 Messages.getString("SynapseInfoForm.text.azure.storage.tip"),
                 ESynapseStorage.getAllSynapseStorageDisplayNames().toArray(new String[0]), 1, true);
-
-        /*Composite azurePartComposite = new Composite(azureGroup, SWT.NULL);
-        GridLayout azurePartLayout = new GridLayout(4, false);
-        azurePartLayout.marginWidth = 0;
-        azurePartLayout.marginHeight = 0;
-        azurePartComposite.setLayout(azurePartLayout);
-        azurePartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));*/
-
-        /*azureHostnameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
-        
-        storageAuthTypeCombo = new LabelledCombo(azurePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
-        		ESynapseAuthType.getAllSynapseAuthTypes());
-        
-        azureContainerText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
-        
-        azureUsernameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
-        
-        azurePasswordText = new LabelledText(azurePartComposite,
-                Messages.getString("SynapseInfoForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
-        
-        azurePasswordText.getTextControl().setEchoChar('*');
-        
-        azureClientIdText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientId"), 1);
-        
-        azureDirectoryIdText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.directoryId"), 1);
-        
-        azureClientKeyText = new LabelledText(azurePartComposite,
-                Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
-        azureClientKeyText.getTextControl().setEchoChar('*');
-        
-        azureDeployBlobText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);*/
         
         azureHostnameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
         
@@ -326,8 +294,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         azureContainerText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
         
-        azureDeployBlobText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
-        
         azureUsernameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
         
         azurePasswordText = new LabelledText(storagePartComposite,
@@ -335,18 +301,22 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         azurePasswordText.getTextControl().setEchoChar('*');
         
-        azureClientIdText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientId"), 1);
-        
         azureDirectoryIdText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.directoryId"), 1);
+        
+        azureClientIdText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientId"), 1);
         
         azureClientKeyText = new LabelledText(storagePartComposite,
                 Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
         azureClientKeyText.getTextControl().setEchoChar('*');
         
+        azureDeployBlobText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
+        
+        
     }
     
     private void addTuningFields() {
-    	Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 110);
+    	//Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 110);
+    	Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 70);
     	tuningGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
     	
     	tuningPropButton = new Button(tuningGroup, SWT.CHECK);

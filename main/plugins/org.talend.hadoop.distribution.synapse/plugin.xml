@@ -555,7 +555,7 @@
             <library id="hadoop-hdfs-client-3.2.1.jar"/>
             <library id="hadoop-mapreduce-client-core-3.2.1.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
-            <library id="jackson-annotations-2.10.2.jar"/>
+            <library id="jackson-annotations-2.12.1.jar"/>
             <library id="jackson-core-2.12.1.jar"/>
             <library id="jackson-databind-2.12.1.jar"/>
             <library id="jackson-dataformat-xml-2.12.1.jar"/>
