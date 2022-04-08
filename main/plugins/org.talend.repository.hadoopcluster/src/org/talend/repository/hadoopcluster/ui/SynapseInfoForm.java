@@ -273,7 +273,8 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     }
 
     private void addFSFields() {
-        Group azureGroup = Form.createGroup(this, 1, Messages.getString("SynapseInfoForm.azureSettings"), 110); //$NON-NLS-1$
+       // Group azureGroup = Form.createGroup(this, 1, Messages.getString("SynapseInfoForm.azureSettings"), 110); //$NON-NLS-1$
+    	 Group azureGroup = Form.createGroup(this, 2, Messages.getString("SynapseInfoForm.azureSettings"), 110); //$NON-NLS-1$
         azureGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         storagePartComposite = new Composite(azureGroup, SWT.NULL);
@@ -287,14 +288,14 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
                 Messages.getString("SynapseInfoForm.text.azure.storage.tip"),
                 ESynapseStorage.getAllSynapseStorageDisplayNames().toArray(new String[0]), 1, true);
 
-        Composite azurePartComposite = new Composite(azureGroup, SWT.NULL);
+        /*Composite azurePartComposite = new Composite(azureGroup, SWT.NULL);
         GridLayout azurePartLayout = new GridLayout(4, false);
         azurePartLayout.marginWidth = 0;
         azurePartLayout.marginHeight = 0;
         azurePartComposite.setLayout(azurePartLayout);
-        azurePartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        azurePartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));*/
 
-        azureHostnameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
+        /*azureHostnameText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
         
         storageAuthTypeCombo = new LabelledCombo(azurePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
         		ESynapseAuthType.getAllSynapseAuthTypes());
@@ -316,7 +317,31 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
                 Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
         azureClientKeyText.getTextControl().setEchoChar('*');
         
-        azureDeployBlobText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
+        azureDeployBlobText = new LabelledText(azurePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);*/
+        
+        azureHostnameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
+        
+        storageAuthTypeCombo = new LabelledCombo(storagePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		ESynapseAuthType.getAllSynapseAuthTypes());
+        
+        azureContainerText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
+        
+        azureDeployBlobText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
+        
+        azureUsernameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
+        
+        azurePasswordText = new LabelledText(storagePartComposite,
+                Messages.getString("SynapseInfoForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        
+        azurePasswordText.getTextControl().setEchoChar('*');
+        
+        azureClientIdText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientId"), 1);
+        
+        azureDirectoryIdText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.directoryId"), 1);
+        
+        azureClientKeyText = new LabelledText(storagePartComposite,
+                Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        azureClientKeyText.getTextControl().setEchoChar('*');
         
     }
     
