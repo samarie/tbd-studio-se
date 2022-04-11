@@ -289,7 +289,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     
     @Override
     public boolean doSupportStandaloneMode() {
-        return false;
+        return true;
     }
     
     @Override
